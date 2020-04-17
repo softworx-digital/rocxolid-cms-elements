@@ -1,0 +1,41 @@
+{
+    "name": "softworx/rocxolid-cms-elements",
+    "description": "RocXolid CMS Elements library.",
+    "keywords": [
+        "laravel",
+        "common",
+        "cms",
+        "elements"
+    ],
+    "type": "library",
+    "authors": [{
+        "name": "softworx",
+        "email": "hello@softworx.digital"
+    }],
+	"license": "MIT",
+    "require": {
+        "php": "~7.2",
+        "laravel/framework": "5.8.*|^6.0",
+        "softworx/rocxolid-cms": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Softworx\\RocXolid\\CMS\\Elements\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Softworx\\RocXolid\\CMS\\Elements\\ServiceProvider"
+            ],
+            "aliases": {
+            }
+        },
+        "rocXolid": {
+            "title": {
+                "en": "CMS Elements",
+                "sk": "CMS Elements"
+            }
+        }
+    }
+}
