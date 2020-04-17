@@ -7,7 +7,7 @@ use Softworx\RocXolid\Http\Requests\FormRequest;
 // rocXolid form field contracts
 use Softworx\RocXolid\Forms\Contracts\FormField;
 // rocXolid cms model contracts
-use Softworx\RocXolid\CMS\Models\Contracts\PageElementable;
+use Softworx\RocXolid\CMS\Models\Contracts\Elementable;
 // rocXolid cms models
 use Softworx\RocXolid\CMS\Models\PageProxy;
 // rocXolid cms elements controllers
@@ -17,7 +17,7 @@ use Softworx\RocXolid\CMS\Elements\Http\Controllers\AbstractElementController;
 abstract class AbstractElementProxyController extends AbstractElementController
 {
     // @todo - zrejme posielat aj classu + test na interface po find instancie a neifovat to - skarede
-    public function getPageElementable(FormRequest $request): PageElementable
+    public function getPageElementable(FormRequest $request): Elementable
     {
         if (!$request->has(FormField::SINGLE_DATA_PARAM)) {
             throw new \InvalidArgumentException(sprintf('Undefined [%s] param in request', FormField::SINGLE_DATA_PARAM));

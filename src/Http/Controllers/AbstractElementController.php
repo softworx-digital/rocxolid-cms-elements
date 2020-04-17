@@ -11,7 +11,7 @@ use Softworx\RocXolid\Models\Contracts\Crudable as CrudableModel;
 // rocXolid cms elements controllers
 use Softworx\RocXolid\CMS\Elements\Http\Controllers\AbstractCrudController as AbstractCMSElementCrudController;
 //
-use Softworx\RocXolid\CMS\Models\Contracts\PageElementable;
+use Softworx\RocXolid\CMS\Models\Contracts\Elementable;
 //
 use Softworx\RocXolid\CMS\Models\PageTemplate;
 use Softworx\RocXolid\CMS\Models\Page;
@@ -33,7 +33,7 @@ abstract class AbstractElementController extends AbstractCMSElementCrudControlle
     ];
 
     // @todo: ugly
-    public function getPageElementable(FormRequest $request): PageElementable
+    public function getPageElementable(FormRequest $request): Elementable
     {
         if (!$request->has(FormField::SINGLE_DATA_PARAM)) {
             throw new \InvalidArgumentException(sprintf('Undefined [%s] param in request', FormField::SINGLE_DATA_PARAM));

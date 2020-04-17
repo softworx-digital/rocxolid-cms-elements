@@ -1,6 +1,6 @@
 <?php
 
-namespace Softworx\RocXolid\CMS\Components\ModelViewers;
+namespace Softworx\RocXolid\CMS\Elements\Components\ModelViewers;
 
 use Softworx\RocXolid\Components\ModelViewers\CrudModelViewer as RocXolidCrudModelViewer;
 
@@ -9,5 +9,5 @@ use Softworx\RocXolid\Components\ModelViewers\CrudModelViewer as RocXolidCrudMod
  */
 class CrudModelViewer extends RocXolidCrudModelViewer
 {
-    protected $view_package = 'rocXolid:cms';
+    protected $view_package = 'rocXolid:cms-elements';
 }
