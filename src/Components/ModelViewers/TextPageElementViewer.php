@@ -6,4 +6,5 @@ use Softworx\RocXolid\CMS\Elements\Components\ModelViewers\PageElementViewer;
 
 class TextPageElementViewer extends PageElementViewer
 {
+
 }

@@ -8,7 +8,7 @@ use Softworx\RocXolid\CMS\Elements\Http\Controllers\AbstractElementController;
 use Softworx\RocXolid\CMS\Elements\Models\Text;
 
 /**
- * Text element CRUD controller.
+ * Text element controller.
  *
  * @author softworx <hello@softworx.digital>
  * @package Softworx\RocXolid\CMS\Elements
@@ -16,4 +16,5 @@ use Softworx\RocXolid\CMS\Elements\Models\Text;
  */
 class Controller extends AbstractElementController
 {
+
 }

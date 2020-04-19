@@ -2,25 +2,22 @@
 
 namespace Softworx\RocXolid\CMS\Elements\Http\Controllers;
 
-use Softworx\RocXolid\Http\Requests\FormRequest;
-use Softworx\RocXolid\Http\Requests\CrudRequest;
-use Softworx\RocXolid\Http\Controllers\Contracts\Crudable as CrudableController;
-use Softworx\RocXolid\Forms\Contracts\FormField;
-use Softworx\RocXolid\Forms\AbstractCrudForm;
-use Softworx\RocXolid\Models\Contracts\Crudable as CrudableModel;
 // rocXolid cms elements controllers
-use Softworx\RocXolid\CMS\Elements\Http\Controllers\AbstractCrudController as AbstractCMSElementCrudController;
-//
-use Softworx\RocXolid\CMS\Models\Contracts\Elementable;
-//
-use Softworx\RocXolid\CMS\Models\PageTemplate;
-use Softworx\RocXolid\CMS\Models\Page;
-use Softworx\RocXolid\CMS\Models\PageProxy;
-use Softworx\RocXolid\CMS\Models\Article;
+use Softworx\RocXolid\CMS\Elements\Http\Controllers\AbstractCrudController;
+// rocXolid cms elements model viewers
+use Softworx\RocXolid\CMS\Elements\Components\ModelViewers\ElementViewer;
 
 // @todo - cele refactornut - vzhladom na pagelementable a pageelementy, ktore mozu mat v sebe elementy (containery)
-abstract class AbstractElementController extends AbstractCMSElementCrudController
+abstract class AbstractElementController extends AbstractCrudController
 {
+    protected static $model_viewer_type = ElementViewer::class;
+
+
+
+
+
+
+    /*
     protected $form_mapping = [
         'create' => 'create',
         'store' => 'create',
@@ -76,20 +73,21 @@ abstract class AbstractElementController extends AbstractCMSElementCrudControlle
             ->replace($page_elementable_model_viewer_component->getDomId($request->_section, $page_elementable->getKey()), $page_elementable_model_viewer_component->fetch($template_name))
             ->get();
     }
+    */
 
     /**
      * {@inheritDoc}
-     */
+     *//*
     protected function onModelStored(CrudRequest $request, CrudableModel $page_element, AbstractCrudForm $form): CrudableController
     {
         $this->getPageElementable($request)->addPageElement($page_element);
 
         return parent::onModelStored($request, $page_element, $form);
-    }
+    }*/
 
     /**
      * {@inheritDoc}
-     */
+     *//*
     protected function successAjaxResponse(CrudRequest $request, CrudableModel $page_element, AbstractCrudForm $form)
     {
         $page_elementable = $this->getPageElementable($request);
@@ -103,6 +101,6 @@ abstract class AbstractElementController extends AbstractCMSElementCrudControlle
             ->replace($page_elementable_model_viewer_component->getDomId($request->_section, $page_elementable->getKey()), $page_elementable_model_viewer_component->fetch($template_name));
 
         return $this;
-        */
-    }
+        *//*
+    }*/
 }

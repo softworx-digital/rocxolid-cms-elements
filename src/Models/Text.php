@@ -2,16 +2,11 @@
 
 namespace Softworx\RocXolid\CMS\Elements\Models;
 
-use App;
-// rocXolid fundamentals
-use Softworx\RocXolid\Contracts\Translatable;
 // rocXolid common traits
 use Softworx\RocXolid\Common\Models\Traits\HasImage;
 use Softworx\RocXolid\Common\Models\Traits\HasFile;
 // rocXolid cms models
-use Softworx\RocXolid\CMS\Models\AbstractPageElement;
-// components
-use Softworx\RocXolid\CMS\Components\ModelViewers\TextPageElementViewer;
+use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractElementComponent;
 
 /**
  * Text page element - most basic element.
@@ -20,12 +15,10 @@ use Softworx\RocXolid\CMS\Components\ModelViewers\TextPageElementViewer;
  * @package Softworx\RocXolid\CMS\Elements
  * @version 1.0.0
  */
-class Text extends AbstractPageElement
+class Text extends AbstractElementComponent
 {
     use HasImage;
     use HasFile;
-
-    protected $table = 'cms_page_element_text';
 
     protected $fillable = [
         'web_id',
@@ -44,11 +37,4 @@ class Text extends AbstractPageElement
             '540x' => [ 'width' => 540, 'method' => 'fit', 'constraints' => [ ], ],
         ],
     ];
-
-    public function getModelViewerComponentInside(Translatable $component)
-    {
-        $controller = $this->getCrudController();
-
-        return TextPageElementViewer::build($controller, $controller)->setModel($this)->setController($controller);
-    }
 }
