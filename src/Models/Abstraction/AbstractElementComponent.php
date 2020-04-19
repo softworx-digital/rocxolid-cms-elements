@@ -19,4 +19,12 @@ abstract class AbstractElementComponent extends AbstractElement
     {
         return sprintf('component-%s', $this->getElementTypeParam());
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getTable()
+    {
+        return sprintf('cms_component_%s', parent::getTable());
+    }
 }

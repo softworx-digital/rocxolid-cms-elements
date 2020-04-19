@@ -27,7 +27,12 @@ use Softworx\RocXolid\CMS\Models\Traits\HasFrontpageUrlAttribute;
 use Softworx\RocXolid\CMS\Elements\Models\Contracts\Element;
 
 /**
+ * Abstraction for element models.
+ * Elements can be assigned to a elementable document (eg. page).
  *
+ * @author softworx <hello@softworx.digital>
+ * @package Softworx\RocXolid\CMS\Elements
+ * @version 1.0.0
  */
 abstract class AbstractElement extends AbstractCrudModel implements Element
 {
@@ -51,6 +56,8 @@ abstract class AbstractElement extends AbstractCrudModel implements Element
     {
         return Str::kebab((new \ReflectionClass($this))->getShortName());
     }
+
+
 
 
 

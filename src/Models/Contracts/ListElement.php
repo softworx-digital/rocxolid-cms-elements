@@ -6,14 +6,14 @@ namespace Softworx\RocXolid\CMS\Elements\Models\Contracts;
 use Softworx\RocXolid\CMS\Elements\Models\Contracts\Element;
 
 /**
- * Interface for model to be used as element for eg. page or document that can contain other elements.
+ * Interface for model to be used as list for other models.
  *
  * @author softworx <hello@softworx.digital>
  * @package Softworx\RocXolid\CMS\Elements
  * @version 1.0.0
  * @todo: define
  */
-interface ElementContainer extends Element
+interface ListElement extends Element
 {
 
 }

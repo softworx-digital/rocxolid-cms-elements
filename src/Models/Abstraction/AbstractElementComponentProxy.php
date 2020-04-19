@@ -21,9 +21,17 @@ use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractElement;
  * @package Softworx\RocXolid\CMS\Elements
  * @version 1.0.0
  */
-abstract class AbstractElementProxy extends AbstractElement implements ProxyElement
+abstract class AbstractElementComponentProxy extends AbstractElementComponent implements ProxyElement
 {
     use Modellable;
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getTable()
+    {
+        return sprintf('cms_proxy_%s', parent::getTable());
+    }
 
     /**
      * {@inheritDoc}

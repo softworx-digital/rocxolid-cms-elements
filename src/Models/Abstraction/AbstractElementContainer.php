@@ -3,7 +3,7 @@
 namespace Softworx\RocXolid\CMS\Elements\Models\Abstraction;
 
 // rocXolid cms elements model contracts
-use Softworx\RocXolid\CMS\Elements\Models\Contracts\ElementContainer;
+use Softworx\RocXolid\CMS\Elements\Models\Contracts\ContainerElement;
 // rocXolid cms elements models
 use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractElement;
 
@@ -15,10 +15,18 @@ use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractElement;
  * @package Softworx\RocXolid\CMS\Elements
  * @version 1.0.0
  */
-abstract class AbstractElementContainer extends AbstractElement implements ElementContainer
+abstract class AbstractElementContainer extends AbstractElement implements ContainerElement
 {
     public function getDocumentEditorComponentType()
     {
         return 'container';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getTable()
+    {
+        return sprintf('cms_container_%s', parent::getTable());
     }
 }
