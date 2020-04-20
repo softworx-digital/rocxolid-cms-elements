@@ -2,7 +2,9 @@
 
 namespace Softworx\RocXolid\CMS\Elements\Models\Contracts;
 
-// rocXolid model contracts
+// rocXolid cms model contracts
+use Softworx\RocXolid\CMS\Elements\Models\Contracts\Elementable;
+// rocXolid cms elements model contracts
 use Softworx\RocXolid\CMS\Elements\Models\Contracts\Element;
 
 /**
@@ -13,7 +15,7 @@ use Softworx\RocXolid\CMS\Elements\Models\Contracts\Element;
  * @version 1.0.0
  * @todo: define
  */
-interface ContainerElement extends Element
+interface ContainerElement extends Element, Elementable
 {
 
 }

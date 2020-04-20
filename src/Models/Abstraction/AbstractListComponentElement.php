@@ -5,7 +5,7 @@ namespace Softworx\RocXolid\CMS\Elements\Models\Abstraction;
 // rocXolid cms elements model contracts
 use Softworx\RocXolid\CMS\Elements\Models\Contracts\ListElement;
 // rocXolid cms elements models
-use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractElementComponent;
+use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractComponentElement;
 
 /**
  * Abstraction for list element models.
@@ -15,7 +15,7 @@ use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractElementComponent;
  * @package Softworx\RocXolid\CMS\Elements
  * @version 1.0.0
  */
-abstract class AbstractElementComponentList extends AbstractElementComponent implements ListElement
+abstract class AbstractListComponentElement extends AbstractComponentElement implements ListElement
 {
     /**
      * {@inheritDoc}

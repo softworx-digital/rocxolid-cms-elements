@@ -19,7 +19,7 @@ use Softworx\RocXolid\CMS\Elements\Http\Controllers\AbstractElementController;
  * @package Softworx\RocXolid\CMS\Elements
  * @version 1.0.0
  */
-abstract class AbstractElementListController extends AbstractElementController
+abstract class AbstractListElementController extends AbstractElementController
 {
     protected static $model_viewer_type = ContainerViewer::class;
 

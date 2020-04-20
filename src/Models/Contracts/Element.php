@@ -17,5 +17,5 @@ use Softworx\RocXolid\Models\Contracts\Cloneable;
  */
 interface Element extends Paramable, Cloneable
 {
-
+    public function getDocumentEditorComponentType(): string;
 }

@@ -3,7 +3,7 @@
 namespace Softworx\RocXolid\CMS\Elements\Models;
 
 // rocXolid cms models
-use Softworx\RocXolid\CMS\Elements\Models\AbstractElementContainer;
+use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractContainerElement;
 
 /**
  * Grid column container component.
@@ -12,10 +12,15 @@ use Softworx\RocXolid\CMS\Elements\Models\AbstractElementContainer;
  * @package Softworx\RocXolid\CMS\Elements
  * @version 1.0.0
  */
-class GridColumn extends AbstractElementContainer
+class GridColumn extends AbstractContainerElement
 {
-    public function getDocumentEditorComponentType()
+    public function getDocumentEditorComponentType(): string
     {
         return 'container-content';
+    }
+
+    public function gridLayout()
+    {
+        return 'col-sm-6';
     }
 }

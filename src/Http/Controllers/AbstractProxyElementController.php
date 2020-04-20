@@ -7,14 +7,14 @@ use Softworx\RocXolid\Http\Requests\FormRequest;
 // rocXolid form field contracts
 use Softworx\RocXolid\Forms\Contracts\FormField;
 // rocXolid cms model contracts
-use Softworx\RocXolid\CMS\Models\Contracts\Elementable;
+use Softworx\RocXolid\CMS\Elements\Models\Contracts\Elementable;
 // rocXolid cms models
 use Softworx\RocXolid\CMS\Models\PageProxy;
 // rocXolid cms elements controllers
 use Softworx\RocXolid\CMS\Elements\Http\Controllers\AbstractElementController;
 
 // @todo - cele refactornut - vzhladom na pagelementable a pageelementy, ktore mozu mat v sebe elementy (containery)
-abstract class AbstractElementProxyController extends AbstractElementController
+abstract class AbstractProxyElementController extends AbstractElementController
 {
     // @todo - zrejme posielat aj classu + test na interface po find instancie a neifovat to - skarede
     public function getPageElementable(FormRequest $request): Elementable

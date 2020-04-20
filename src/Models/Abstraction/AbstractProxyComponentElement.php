@@ -10,7 +10,7 @@ use Softworx\RocXolid\Models\Contracts\Crudable;
 // rocXolid cms elements model contracts
 use Softworx\RocXolid\CMS\Elements\Models\Contracts\ProxyElement;
 // rocXolid cms elements models
-use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractElement;
+use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractComponentElement;
 // use Softworx\RocXolid\CMS\Models\PageProxy;
 
 /**
@@ -21,7 +21,7 @@ use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractElement;
  * @package Softworx\RocXolid\CMS\Elements
  * @version 1.0.0
  */
-abstract class AbstractElementComponentProxy extends AbstractElementComponent implements ProxyElement
+abstract class AbstractProxyComponentElement extends AbstractComponentElement implements ProxyElement
 {
     use Modellable;
 

@@ -20,7 +20,7 @@ use Softworx\RocXolid\Common\Models\Web;
 use Softworx\RocXolid\Common\Models\Traits\HasWeb;
 use Softworx\RocXolid\Common\Models\Traits\UserGroupAssociatedWeb;
 // rocXolid cms model contracts
-use Softworx\RocXolid\CMS\Models\Contracts\Elementable;
+use Softworx\RocXolid\CMS\Elements\Models\Contracts\Elementable;
 // rocXolid cms model traits traits
 use Softworx\RocXolid\CMS\Models\Traits\HasFrontpageUrlAttribute;
 // rocXolid cms elements model contracts
@@ -50,7 +50,7 @@ abstract class AbstractElement extends AbstractCrudModel implements Element
     ];
 
     // @todo: make this tied to specific document editor eg. document editor specific use service / builder
-    abstract public function getDocumentEditorComponentType();
+    abstract public function getDocumentEditorComponentType(): string;
 
     public function getElementTypeParam()
     {

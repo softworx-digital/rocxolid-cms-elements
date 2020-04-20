@@ -15,7 +15,7 @@ use Softworx\RocXolid\CMS\Elements\Components\ModelViewers\ElementContainerViewe
  * @package Softworx\RocXolid\CMS\Elements
  * @version 1.0.0
  */
-abstract class AbstractElementContainerController extends AbstractElementController
+abstract class AbstractContainerElementController extends AbstractElementController
 {
     protected static $model_viewer_type = ElementContainerViewer::class;
 }

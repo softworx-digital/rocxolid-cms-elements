@@ -13,9 +13,9 @@ use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractElement;
  * @package Softworx\RocXolid\CMS\Elements
  * @version 1.0.0
  */
-abstract class AbstractElementComponent extends AbstractElement
+abstract class AbstractComponentElement extends AbstractElement
 {
-    public function getDocumentEditorComponentType()
+    public function getDocumentEditorComponentType(): string
     {
         return sprintf('component-%s', $this->getElementTypeParam());
     }

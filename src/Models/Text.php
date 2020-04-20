@@ -6,7 +6,7 @@ namespace Softworx\RocXolid\CMS\Elements\Models;
 use Softworx\RocXolid\Common\Models\Traits\HasImage;
 use Softworx\RocXolid\Common\Models\Traits\HasFile;
 // rocXolid cms models
-use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractElementComponent;
+use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractComponentElement;
 
 /**
  * Text page element - most basic element.
@@ -15,7 +15,7 @@ use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractElementComponent;
  * @package Softworx\RocXolid\CMS\Elements
  * @version 1.0.0
  */
-class Text extends AbstractElementComponent
+class Text extends AbstractComponentElement
 {
     use HasImage;
     use HasFile;
