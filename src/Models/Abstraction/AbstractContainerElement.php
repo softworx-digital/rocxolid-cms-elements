@@ -2,6 +2,7 @@
 
 namespace Softworx\RocXolid\CMS\Elements\Models\Abstraction;
 
+use Illuminate\Database\Eloquent\Relations\MorphPivot;
 use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 // rocXolid cms model contracts
 use Softworx\RocXolid\CMS\Elements\Models\Contracts\Elementable;
@@ -40,7 +41,7 @@ abstract class AbstractContainerElement extends AbstractElement implements Conta
      */
     public function getTable()
     {
-        return sprintf('cms_container_%s', parent::getTable());
+        return sprintf('cms_container_%s', $this->getTableBaseName());
     }
 
     /**
@@ -49,5 +50,20 @@ abstract class AbstractContainerElement extends AbstractElement implements Conta
     public function elementsPivots(): HasOneOrMany
     {
         return $this->morphMany(ContainerElementPivot::class, 'container');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getPivot(Element $element): MorphPivot
+    {
+        $type = $this->elementsPivots()->getRelated();
+
+        return $type::firstOrNew([
+            $type->container()->getMorphType() => get_class($this),
+            $type->container()->getForeignKeyName() => $this->getKey(),
+            $type->element()->getMorphType() => get_class($element),
+            $type->element()->getForeignKeyName() => $element->getKey(),
+        ]);
     }
 }

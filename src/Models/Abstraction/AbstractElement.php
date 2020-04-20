@@ -45,19 +45,37 @@ abstract class AbstractElement extends AbstractCrudModel implements Element
 
     protected static $template_dir = 'page-element';
 
+    protected $pivot_data = null;
+
     protected $relationships = [
         'web',
     ];
 
-    // @todo: make this tied to specific document editor eg. document editor specific use service / builder
+    abstract public function setDataOnCreate(Collection $data): Element;
+
     abstract public function getDocumentEditorComponentType(): string;
 
-    public function getElementTypeParam()
+    protected function getTableBaseName()
+    {
+        return Str::plural(Str::snake((new \ReflectionClass($this))->getShortName()));
+    }
+
+    public function getElementTypeParam(): string
     {
         return Str::kebab((new \ReflectionClass($this))->getShortName());
     }
 
+    public function setPivotData(Collection $pivot_data): Element
+    {
+        $this->pivot_data = $pivot_data;
 
+        return $this;
+    }
+
+    public function getPivotData(): Collection
+    {
+        return collect($this->pivot_data);
+    }
 
 
 
@@ -183,17 +201,7 @@ abstract class AbstractElement extends AbstractCrudModel implements Element
         return $this->parent_page_elementable;
     }
 
-    public function setPivotData($pivot_data)
-    {
-        $this->pivot_data = $pivot_data;
 
-        return $this;
-    }
-
-    public function getPivotData(): Collection
-    {
-        return collect($this->pivot_data);
-    }
 
     public function pages()
     {

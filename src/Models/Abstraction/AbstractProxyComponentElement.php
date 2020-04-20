@@ -30,7 +30,7 @@ abstract class AbstractProxyComponentElement extends AbstractComponentElement im
      */
     public function getTable()
     {
-        return sprintf('cms_proxy_%s', parent::getTable());
+        return sprintf('cms_proxy_component_%s', $this->getTableBaseName());
     }
 
     /**

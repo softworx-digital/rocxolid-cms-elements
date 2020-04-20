@@ -22,6 +22,6 @@ abstract class AbstractListComponentElement extends AbstractComponentElement imp
      */
     public function getTable()
     {
-        return sprintf('cms_list_%s', parent::getTable());
+        return sprintf('cms_list_component_%s', $this->getTableBaseName());
     }
 }

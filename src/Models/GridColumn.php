@@ -2,6 +2,9 @@
 
 namespace Softworx\RocXolid\CMS\Elements\Models;
 
+use Illuminate\Support\Collection;
+// rocXolid cms model contracts
+use Softworx\RocXolid\CMS\Elements\Models\Contracts\Element;
 // rocXolid cms models
 use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractContainerElement;
 
@@ -14,13 +17,42 @@ use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractContainerElement;
  */
 class GridColumn extends AbstractContainerElement
 {
+    /**
+     * {@inheritDoc}
+     */
+    protected $fillable = [
+        'grid_layout',
+    ];
+
+    /**
+     * {@inheritDoc}
+     */
     public function getDocumentEditorComponentType(): string
     {
         return 'container-content';
     }
 
-    public function gridLayout()
+    /**
+     * {@inheritDoc}
+     */
+    public function setDataOnCreate(Collection $data): Element
     {
-        return 'col-sm-6';
+        $this->fill([
+            'grid_layout' => collect($data->get('gridLayout'))->toJson(),
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * Make bootstrap column breakpoints.
+     *
+     * @return string
+     */
+    public function gridLayout(): string
+    {
+        return collect(json_decode($this->grid_layout, true))->map(function ($size, $breakpoint) {
+            return sprintf('col-%s-%s', $breakpoint, $size);
+        })->join(' ');
     }
 }

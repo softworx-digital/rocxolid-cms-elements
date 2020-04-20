@@ -2,6 +2,7 @@
 
 namespace Softworx\RocXolid\CMS\Elements\Models\Contracts;
 
+use Illuminate\Support\Collection;
 // rocXolid contracts
 use Softworx\RocXolid\Contracts\Paramable;
 // rocXolid model contracts
@@ -17,5 +18,13 @@ use Softworx\RocXolid\Models\Contracts\Cloneable;
  */
 interface Element extends Paramable, Cloneable
 {
+    public function getElementTypeParam(): string;
+
     public function getDocumentEditorComponentType(): string;
+
+    public function setDataOnCreate(Collection $data): Element;
+
+    public function setPivotData(Collection $pivot_data): Element;
+
+    public function getPivotData(): Collection;
 }

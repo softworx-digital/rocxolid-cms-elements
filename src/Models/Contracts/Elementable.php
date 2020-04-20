@@ -3,6 +3,7 @@
 namespace Softworx\RocXolid\CMS\Elements\Models\Contracts;
 
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Relations\MorphPivot;
 use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 // rocXolid model contracts
 use Softworx\RocXolid\Models\Contracts\Crudable;
@@ -45,9 +46,17 @@ interface Elementable extends Crudable
     /**
      * Intermediate relation to enable two-side polymorphism for elementable's and elements.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany|\Illuminate\Database\Eloquent\Relations\MorphMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasOneOrMany
      */
     public function elementsPivots(): HasOneOrMany;
+
+    /**
+     * Retrieve pivot model for given element or create new if not available.
+     *
+     * @param \Softworx\RocXolid\CMS\Elements\Models\Contracts\Element $element
+     * @return \Illuminate\Database\Eloquent\Relations\MorphPivot
+     */
+    public function getPivot(Element $element): MorphPivot;
 
     /**
      * Retrieve elements assigned to elementable.

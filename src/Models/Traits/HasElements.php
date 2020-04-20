@@ -20,6 +20,11 @@ use Softworx\RocXolid\CMS\Elements\Models\Contracts\Element;
  */
 trait HasElements
 {
+    /**
+     * Temporary element container used for building and persisting element structure.
+     *
+     * @var \Illuminate\Support\Collection
+     */
     private $elements_bag;
 
     /**
@@ -27,8 +32,7 @@ trait HasElements
      */
     public function addElement(Element $element): Elementable
     {
-        $this->elements_bag = $this->elements_bag ?? collect();
-        $this->elements_bag->push($element);
+        $this->elementsBag()->push($element);
 
         return $this;
     }
@@ -38,6 +42,8 @@ trait HasElements
      */
     public function elementsBag(): Collection
     {
+        $this->elements_bag = $this->elements_bag ?? collect();
+
         return $this->elements_bag;
     }
 
@@ -56,8 +62,10 @@ trait HasElements
      */
     public function savePivot(Element $element): Elementable
     {
-        $pivot = $this->elementsPivots()->getRelated();
-        $pivot->setElement($this, $element);
+        $pivot = $this
+            ->getPivot($element)
+            ->setElement($this, $element)
+            ->fill($element->getPivotData()->toArray());
 
         // $this->elementsPivots->add($pivot); // non-persistent
         $this->elementsPivots()->save($pivot);
@@ -77,8 +85,8 @@ trait HasElements
             ->orderBy('position')
             ->get()
             ->map(function ($pivot) {
-            return $pivot->element;
-        });
+                return $pivot->element->setPivotData(collect($pivot->attributesToArray()));
+            });
     }
 
     /**

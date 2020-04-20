@@ -2,6 +2,9 @@
 
 namespace Softworx\RocXolid\CMS\Elements\Models;
 
+use Illuminate\Support\Collection;
+// rocXolid cms model contracts
+use Softworx\RocXolid\CMS\Elements\Models\Contracts\Element;
 // rocXolid common traits
 use Softworx\RocXolid\Common\Models\Traits\HasImage;
 use Softworx\RocXolid\Common\Models\Traits\HasFile;
@@ -20,8 +23,10 @@ class Text extends AbstractComponentElement
     use HasImage;
     use HasFile;
 
+    /**
+     * {@inheritDoc}
+     */
     protected $fillable = [
-        'web_id',
         'name',
         'bookmark',
         'content',
@@ -37,4 +42,14 @@ class Text extends AbstractComponentElement
             '540x' => [ 'width' => 540, 'method' => 'fit', 'constraints' => [ ], ],
         ],
     ];
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setDataOnCreate(Collection $data): Element
+    {
+        $this->fill($data->toArray());
+
+        return $this;
+    }
 }

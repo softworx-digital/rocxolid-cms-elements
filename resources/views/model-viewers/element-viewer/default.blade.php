@@ -1,3 +1,3 @@
-<div {{ $component->render('include.props') }}>
+<div data-type="{{ $component->getModel()->getDocumentEditorComponentType() }}" {{ $component->render('include.props') }}>
     {!! $component->getModel()->getModelViewerComponent()->render('snippet-content') !!}
 </div>

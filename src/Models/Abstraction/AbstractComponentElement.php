@@ -15,6 +15,9 @@ use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractElement;
  */
 abstract class AbstractComponentElement extends AbstractElement
 {
+    /**
+     * {@inheritDoc}
+     */
     public function getDocumentEditorComponentType(): string
     {
         return sprintf('component-%s', $this->getElementTypeParam());
@@ -25,6 +28,6 @@ abstract class AbstractComponentElement extends AbstractElement
      */
     public function getTable()
     {
-        return sprintf('cms_component_%s', parent::getTable());
+        return sprintf('cms_component_%s', $this->getTableBaseName());
     }
 }
