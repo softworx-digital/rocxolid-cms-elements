@@ -51,12 +51,12 @@ interface Elementable extends Crudable
     public function elementsPivots(): HasOneOrMany;
 
     /**
-     * Retrieve pivot model for given element or create new if not available.
+     * Retrieve pivot model for given element using tree search.
      *
      * @param \Softworx\RocXolid\CMS\Elements\Models\Contracts\Element $element
-     * @return \Illuminate\Database\Eloquent\Relations\MorphPivot
+     * @return \Illuminate\Database\Eloquent\Relations\MorphPivot|null
      */
-    public function getPivot(Element $element): MorphPivot;
+    public function findPivot(Element $element): ?MorphPivot;
 
     /**
      * Retrieve elements assigned to elementable.

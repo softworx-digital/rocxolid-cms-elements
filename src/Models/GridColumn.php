@@ -3,6 +3,8 @@
 namespace Softworx\RocXolid\CMS\Elements\Models;
 
 use Illuminate\Support\Collection;
+// rocXolid model contracts
+use Softworx\RocXolid\Models\Contracts\Crudable;
 // rocXolid cms model contracts
 use Softworx\RocXolid\CMS\Elements\Models\Contracts\Element;
 // rocXolid cms models
@@ -35,7 +37,7 @@ class GridColumn extends AbstractContainerElement
     /**
      * {@inheritDoc}
      */
-    public function setDataOnCreate(Collection $data): Element
+    public function onCreateBeforeSave(Collection $data): Crudable
     {
         $this->fill([
             'grid_layout' => collect($data->get('gridLayout'))->toJson(),

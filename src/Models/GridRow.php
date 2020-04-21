@@ -2,9 +2,6 @@
 
 namespace Softworx\RocXolid\CMS\Elements\Models;
 
-use Illuminate\Support\Collection;
-// rocXolid cms model contracts
-use Softworx\RocXolid\CMS\Elements\Models\Contracts\Element;
 // rocXolid cms models
 use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractContainerElement;
 
@@ -17,11 +14,5 @@ use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractContainerElement;
  */
 class GridRow extends AbstractContainerElement
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function setDataOnCreate(Collection $data): Element
-    {
-        return $this;
-    }
+
 }

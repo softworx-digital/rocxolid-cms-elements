@@ -4,6 +4,7 @@ namespace Softworx\RocXolid\CMS\Elements\Models\Traits;
 
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Relations\MorphPivot;
 // rocXolid cms model contracts
 use Softworx\RocXolid\CMS\Elements\Models\Contracts\Elementable;
 // // rocXolid cms model pivot
@@ -26,6 +27,22 @@ trait HasElements
      * @var \Illuminate\Support\Collection
      */
     private $elements_bag;
+
+    /**
+     * {@inheritDoc}
+     */
+    public function elements(): Collection
+    {
+        // $this->elementsPivots()->with('element')
+        return $this
+            ->elementsPivots()
+            ->with('element')
+            ->orderBy('position')
+            ->get()
+            ->map(function ($pivot) {
+                return $pivot->element->setPivotData(collect($pivot->attributesToArray()));
+            });
+    }
 
     /**
      * {@inheritDoc}
@@ -63,7 +80,7 @@ trait HasElements
     public function savePivot(Element $element): Elementable
     {
         $pivot = $this
-            ->getPivot($element)
+            ->findOrNewPivot($element)
             ->setElement($this, $element)
             ->fill($element->getPivotData()->toArray());
 
@@ -76,17 +93,40 @@ trait HasElements
     /**
      * {@inheritDoc}
      */
-    public function elements(): Collection
+    public function findPivot(Element $element): ?MorphPivot
     {
-        // $this->elementsPivots()->with('element')
-        return $this
-            ->elementsPivots()
-            ->with('element')
-            ->orderBy('position')
-            ->get()
-            ->map(function ($pivot) {
-                return $pivot->element->setPivotData(collect($pivot->attributesToArray()));
+        $type = $this->elementsPivots()->getRelated();
+
+        return $type::where($type->getPrimaryKeyWhereCondition($this, $element))->firstOr(function() use ($element) {
+            $elementable = $this->elements()->filter(function($element) {
+                return $element instanceof Elementable;
             });
+
+            $pivot = $elementable->reduce(function ($carry, $child) use ($element) {
+                $pivot = $child->findPivot($element);
+
+                if ($pivot && $carry) {
+                    throw new \RuntimeException(sprintf('There are two pivots satisfying same condition'));
+                }
+
+                return $pivot ?? $carry;
+            });
+
+            return $pivot;
+        });
+    }
+
+    /**
+     * Find direct pivot connecting model and element.
+     *
+     * @param \Softworx\RocXolid\CMS\Models\Pivots\ElementableElement $element
+     * @return \Illuminate\Database\Eloquent\Relations\MorphPivot
+     */
+    protected function findOrNewPivot(Element $element): MorphPivot
+    {
+        $type = $this->elementsPivots()->getRelated();
+
+        return $type::firstOrNew($type->getPrimaryKeyWhereCondition($this, $element));
     }
 
     /**

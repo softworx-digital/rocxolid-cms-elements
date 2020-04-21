@@ -14,17 +14,36 @@ use Softworx\RocXolid\Models\Contracts\Cloneable;
  * @author softworx <hello@softworx.digital>
  * @package Softworx\RocXolid\CMS\Elements
  * @version 1.0.0
- * @todo: define
  */
 interface Element extends Paramable, Cloneable
 {
+    /**
+     * Obtain element type parameter for polymorphic mapping.
+     *
+     * @return string
+     */
     public function getElementTypeParam(): string;
 
+    /**
+     * Obtain element type as used in document editor.
+     * Mapping between internal CMS elements and document editor components.
+     *
+     * @return string
+     */
     public function getDocumentEditorComponentType(): string;
 
-    public function setDataOnCreate(Collection $data): Element;
-
+    /**
+     * Set data from pivot so it can be used on frontpage and elsewhere.
+     *
+     * @param \Illuminate\Support\Collection $pivot_data
+     * @return Element
+     */
     public function setPivotData(Collection $pivot_data): Element;
 
+    /**
+     * Retrieve pivot data.
+     *
+     * @return \Illuminate\Support\Collection
+     */
     public function getPivotData(): Collection;
 }

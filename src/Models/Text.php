@@ -3,6 +3,8 @@
 namespace Softworx\RocXolid\CMS\Elements\Models;
 
 use Illuminate\Support\Collection;
+// rocXolid model contracts
+use Softworx\RocXolid\Models\Contracts\Crudable;
 // rocXolid cms model contracts
 use Softworx\RocXolid\CMS\Elements\Models\Contracts\Element;
 // rocXolid common traits
@@ -46,8 +48,9 @@ class Text extends AbstractComponentElement
     /**
      * {@inheritDoc}
      */
-    public function setDataOnCreate(Collection $data): Element
+    public function onCreateBeforeSave(Collection $data): Crudable
     {
+        // the content can be array structured
         $this->fill($data->toArray());
 
         return $this;
