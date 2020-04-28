@@ -26,6 +26,14 @@ abstract class AbstractComponentElement extends AbstractElement
     /**
      * {@inheritDoc}
      */
+    public function gridLayoutClass(): string
+    {
+        return 'element';
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getTable()
     {
         return sprintf('cms_component_%s', $this->getTableBaseName());

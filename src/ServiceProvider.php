@@ -5,6 +5,12 @@ namespace Softworx\RocXolid\CMS\Elements;
 use Illuminate\Foundation\AliasLoader;
 // rocXolid service providers
 use Softworx\RocXolid\AbstractServiceProvider as RocXolidAbstractServiceProvider;
+// rocXolid rendering service contracts
+use Softworx\RocXolid\Rendering\Services\Contracts\RenderingService;
+// rocXolid cms rendering service contracts
+use Softworx\RocXolid\CMS\Rendering\Services\ThemeRenderingService;
+// rocXolid cms elements model viewers
+use Softworx\RocXolid\CMS\Elements\Components\ModelViewers;
 
 /**
  * rocXolid CMS Elements package primary service provider.
@@ -94,6 +100,18 @@ class ServiceProvider extends RocXolidAbstractServiceProvider
      */
     private function bindContracts(): RocXolidAbstractServiceProvider
     {
+        // @todo: this doesn't work and setting this for each model viewer isn't the right way
+        // $this->app->when(\Softworx\RocXolid\CMS\Rendering\Contracts\Themeable::class)
+        $this->app->when([
+                ModelViewers\GridRowElementViewer::class,
+                ModelViewers\GridColumnElementViewer::class,
+                ModelViewers\TextElementViewer::class,
+            ])
+            ->needs(RenderingService::class)
+            ->give(function ($app) {
+                return $app->make(ThemeRenderingService::class);
+            });
+
         return $this;
     }
 

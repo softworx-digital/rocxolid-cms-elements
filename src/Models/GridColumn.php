@@ -47,11 +47,19 @@ class GridColumn extends AbstractContainerElement
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public function gridLayoutClass(): string
+    {
+        return $this->bootstrapBreakpoints();
+    }
+
+    /**
      * Make bootstrap column breakpoints.
      *
      * @return string
      */
-    public function gridLayout(): string
+    protected function bootstrapBreakpoints(): string
     {
         return collect(json_decode($this->grid_layout, true))->map(function ($size, $breakpoint) {
             return sprintf('col-%s-%s', $breakpoint, $size);

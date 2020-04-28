@@ -19,7 +19,7 @@ abstract class AbstractCrudController extends RocXolidAbstractCrudController
     /**
      * {@inheritDoc}
      */
-    protected static $dashboard_class = CrudDashboard::class;
+    protected static $dashboard_type = CrudDashboard::class;
 
     /**
      * {@inheritDoc}

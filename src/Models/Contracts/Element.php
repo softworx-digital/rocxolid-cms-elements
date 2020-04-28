@@ -46,4 +46,11 @@ interface Element extends Paramable, Cloneable
      * @return \Illuminate\Support\Collection
      */
     public function getPivotData(): Collection;
+
+    /**
+     * Get element's grid CSS class.
+     *
+     * @return string
+     */
+    public function gridLayoutClass(): string;
 }

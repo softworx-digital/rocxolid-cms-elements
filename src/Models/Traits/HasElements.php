@@ -34,14 +34,16 @@ trait HasElements
     public function elements(): Collection
     {
         // $this->elementsPivots()->with('element')
-        return $this
+        $this
             ->elementsPivots()
             ->with('element')
             ->orderBy('position')
             ->get()
             ->map(function ($pivot) {
-                return $pivot->element->setPivotData(collect($pivot->attributesToArray()));
+                $this->elementsBag()->push($pivot->element->setPivotData(collect($pivot->attributesToArray())));
             });
+
+        return $this->elementsBag();
     }
 
     /**
@@ -50,6 +52,16 @@ trait HasElements
     public function addElement(Element $element): Elementable
     {
         $this->elementsBag()->push($element);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function forgetElements(): Elementable
+    {
+        $this->elements_bag = collect();
 
         return $this;
     }

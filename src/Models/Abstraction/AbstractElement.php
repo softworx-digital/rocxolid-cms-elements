@@ -63,6 +63,11 @@ abstract class AbstractElement extends AbstractCrudModel implements Element
     /**
      * {@inheritDoc}
      */
+    abstract public function gridLayoutClass(): string;
+
+    /**
+     * {@inheritDoc}
+     */
     public function getElementTypeParam(): string
     {
         return Str::kebab((new \ReflectionClass($this))->getShortName());
@@ -94,9 +99,13 @@ abstract class AbstractElement extends AbstractCrudModel implements Element
         return Str::plural(Str::snake((new \ReflectionClass($this))->getShortName()));
     }
 
-    /*
     public function getTemplateName($subdirectory = null, $use_template = null, $default_template = 'default')
     {
+dd(__METHOD__);
+        return sprintf('%s.%s', $this->getModelName(), $this->getPivotData()->get('template'));
+
+
+
         if (!is_null($use_template)) {
             $template = $use_template;
         } elseif (property_exists($this, 'template_name')) {
@@ -116,6 +125,7 @@ abstract class AbstractElement extends AbstractCrudModel implements Element
         return sprintf('%s.%s.%s', static::$template_dir, $this->getModelName(), $template);
     }
 
+    /*
     public function getTemplateOptions(Web $web = null)
     {
         $templates = collect();
