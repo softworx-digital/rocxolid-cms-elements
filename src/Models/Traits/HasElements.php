@@ -22,7 +22,7 @@ use Softworx\RocXolid\CMS\Elements\Models\Contracts\Element;
 trait HasElements
 {
     /**
-     * Temporary element container used for building and persisting element structure.
+     * In-memory element container used for building and persisting element structure.
      *
      * @var \Illuminate\Support\Collection
      */
@@ -33,17 +33,17 @@ trait HasElements
      */
     public function elements(): Collection
     {
-        // $this->elementsPivots()->with('element')
-        $this
+        $elements = $this
             ->elementsPivots()
             ->with('element')
             ->orderBy('position')
             ->get()
             ->map(function ($pivot) {
-                $this->elementsBag()->push($pivot->element->setPivotData(collect($pivot->attributesToArray())));
+                // $this->elementsBag()->push($pivot->element->setPivotData(collect($pivot->attributesToArray())));
+                return $pivot->element->setPivotData(collect($pivot->attributesToArray()));
             });
 
-        return $this->elementsBag();
+        return $elements->isNotEmpty() ? $elements : $this->elementsBag();
     }
 
     /**
@@ -109,16 +109,21 @@ trait HasElements
     {
         $type = $this->elementsPivots()->getRelated();
 
-        return $type::where($type->getPrimaryKeyWhereCondition($this, $element))->firstOr(function() use ($element) {
+        return $type::where($type->getPrimaryKeyWhereCondition($this, $element))->firstOr(function() use ($element, $type) {
             $elementable = $this->elements()->filter(function($element) {
                 return $element instanceof Elementable;
             });
 
-            $pivot = $elementable->reduce(function ($carry, $child) use ($element) {
+            $pivot = $elementable->reduce(function ($carry, $child) use ($element, $type) {
                 $pivot = $child->findPivot($element);
 
                 if ($pivot && $carry) {
-                    throw new \RuntimeException(sprintf('There are two pivots satisfying same condition'));
+                    throw new \RuntimeException(sprintf(
+                        'There are two pivots satisfying same condition [%s] pivot [%s], carry [%s]',
+                        print_r($type->getPrimaryKeyWhereCondition($this, $element), true),
+                        $pivot->toJson(),
+                        $carry->toJson()
+                    ));
                 }
 
                 return $pivot ?? $carry;

@@ -5,8 +5,11 @@ namespace Softworx\RocXolid\CMS\Elements\Models\Contracts;
 use Illuminate\Support\Collection;
 // rocXolid contracts
 use Softworx\RocXolid\Contracts\Paramable;
+use Softworx\RocXolid\Contracts\Optionable;
 // rocXolid model contracts
 use Softworx\RocXolid\Models\Contracts\Cloneable;
+// rocXolid cms elements snippet model viewers
+use Softworx\RocXolid\CMS\Elements\Components\SnippetModelViewers\SnippetModelViewer;
 
 /**
  * Interface for model to be used as element for eg. page or document.
@@ -15,7 +18,7 @@ use Softworx\RocXolid\Models\Contracts\Cloneable;
  * @package Softworx\RocXolid\CMS\Elements
  * @version 1.0.0
  */
-interface Element extends Paramable, Cloneable
+interface Element extends Paramable, Optionable, Cloneable
 {
     /**
      * Obtain element type parameter for polymorphic mapping.
@@ -36,7 +39,7 @@ interface Element extends Paramable, Cloneable
      * Set data from pivot so it can be used on frontpage and elsewhere.
      *
      * @param \Illuminate\Support\Collection $pivot_data
-     * @return Element
+     * @return Softworx\RocXolid\CMS\Elements\Models\Contracts\Element
      */
     public function setPivotData(Collection $pivot_data): Element;
 
@@ -53,4 +56,21 @@ interface Element extends Paramable, Cloneable
      * @return string
      */
     public function gridLayoutClass(): string;
+
+    /**
+     * Prepare the instance for snippets display.
+     *
+     * @param \Illuminate\Support\Collection
+     * @return \Softworx\RocXolid\CMS\Elements\Models\Contracts\Element
+     */
+    public function prepareSnippetsData(Collection $options): Element;
+
+    /**
+     * Obtain model viewer to be used for element snippets.
+     *
+     * @param string $theme
+     * @param string|null $view_package
+     * @return \Softworx\RocXolid\CMS\Elements\Components\SnippetModelViewers\SnippetModelViewer
+     */
+    public function getSnippetModelViewerComponent(string $theme, ?string $view_package = null): SnippetModelViewer;
 }

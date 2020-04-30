@@ -22,6 +22,11 @@ class GridRow extends AbstractContainerElement
         return 'row';
     }
 
+    public function setColumns(int $count)
+    {
+        return $this->addFakeColumns($count);
+    }
+
     public function addFakeColumns(int $count)
     {
         $this->forgetElements();
