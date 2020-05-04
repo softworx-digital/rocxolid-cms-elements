@@ -75,6 +75,12 @@ class ServiceProvider extends RocXolidAbstractServiceProvider
             __DIR__ . '/../resources/views' => resource_path('views/vendor/softworx/rocXolid/cms-elements'),
         ], 'views');
 
+        // assets files
+        // php artisan vendor:publish --provider="Softworx\RocXolid\CMS\Elements\ServiceProvider" --tag="assets" (--force to overwrite)
+        $this->publishes([
+            __DIR__ . '/../resources/assets' => public_path('vendor/softworx/rocXolid-cms-elements'),
+        ], 'assets');
+
         // migrations
         // php artisan vendor:publish --provider="Softworx\RocXolid\CMS\Elements\ServiceProvider" --tag="migrations" (--force to overwrite)
         $this->publishes([

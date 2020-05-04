@@ -9,14 +9,14 @@ return [
     ],
     'model' => [
         'title' => [
-            'singular' => 'Textový blok',
-            'plural' => 'Textový blok',
+            'singular' => 'Stĺpec',
+            'plural' => 'Stĺpce',
         ],
     ],
     'elementable' => [
         'categories' => [
-            'Komponent',
-            'Textový komponent',
+            'Mriežka',
+            'Vertikálne elementy',
         ],
     ],
 ];

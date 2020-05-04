@@ -2,15 +2,14 @@
 
 namespace Softworx\RocXolid\CMS\Elements\Models\Traits;
 
-use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphPivot;
 // rocXolid cms model contracts
 use Softworx\RocXolid\CMS\Elements\Models\Contracts\Elementable;
-// // rocXolid cms model pivot
-use Softworx\RocXolid\CMS\Models\Pivots\ElementableElement;
 // rocXolid cms elements model contracts
 use Softworx\RocXolid\CMS\Elements\Models\Contracts\Element;
+// rocXolid cms elements builders
+use Softworx\RocXolid\CMS\Elements\Builders\ElementBuilder;
 
 /**
  * Enables models to have elements assigned.
@@ -30,6 +29,7 @@ trait HasElements
 
     /**
      * {@inheritDoc}
+     * @todo: make this somewhat seamless for in-memory / persisted elements
      */
     public function elements(): Collection
     {
@@ -39,8 +39,7 @@ trait HasElements
             ->orderBy('position')
             ->get()
             ->map(function ($pivot) {
-                // $this->elementsBag()->push($pivot->element->setPivotData(collect($pivot->attributesToArray())));
-                return $pivot->element->setPivotData(collect($pivot->attributesToArray()));
+                return ElementBuilder::buildElement($pivot, $this->getDependenciesProvider(), $this->getDependenciesDataProvider());
             });
 
         return $elements->isNotEmpty() ? $elements : $this->elementsBag();
@@ -136,7 +135,7 @@ trait HasElements
     /**
      * Find direct pivot connecting model and element.
      *
-     * @param \Softworx\RocXolid\CMS\Models\Pivots\ElementableElement $element
+     * @param \Softworx\RocXolid\CMS\Elements\Models\Contracts\Element $element
      * @return \Illuminate\Database\Eloquent\Relations\MorphPivot
      */
     protected function findOrNewPivot(Element $element): MorphPivot

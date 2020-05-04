@@ -22,21 +22,56 @@ class GridRow extends AbstractContainerElement
         return 'row';
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function getDocumentEditorComponentSnippetPreview(): string
+    {
+        return $this->getDocumentEditorComponentSnippetPreviewAssetPath(sprintf('grid-1x%s', $this->elements()->count()));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getDocumentEditorComponentSnippetTitle(): string
+    {
+        return sprintf(
+            '%s, %s %s',
+            $this->getModelViewerComponent()->translate('model.title.singular'),
+            $this->elements()->count(),
+            $this->elements()->first()->getModelViewerComponent()->translate(sprintf('model.title.%s', $this->elements()->count() > 1 ? 'plural' : 'singular'))
+        );
+    }
+
+    /**
+     * Option setting handler.
+     * Set column elements to the row.
+     *
+     * @param integer $count
+     */
     public function setColumns(int $count)
     {
         return $this->addFakeColumns($count);
     }
 
-    public function addFakeColumns(int $count)
+    /**
+     * Add empty columns to the row.
+     *
+     * @param integer $count
+     * @return \Softworx\RocXolid\CMS\Elements\Models\GridRow
+     */
+    protected function addFakeColumns(int $count)
     {
         $this->forgetElements();
 
         for ($i = 0; $i < $count; $i++) {
-            $column = app(GridColumn::class)->fill([
-                'grid_layout' => json_encode([
-                    'sm' => (int)(12 / $count)
-                ])
-            ]);
+            $column = app(GridColumn::class)
+                ->setDependenciesProvider($this->getDependenciesProvider())
+                ->fill([
+                    'grid_layout' => json_encode([
+                        'sm' => (int)(12 / $count)
+                    ])
+                ]);
 
             $this->elements()->push($column);
         }

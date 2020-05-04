@@ -8,8 +8,8 @@ use Softworx\RocXolid\Contracts\Paramable;
 use Softworx\RocXolid\Contracts\Optionable;
 // rocXolid model contracts
 use Softworx\RocXolid\Models\Contracts\Cloneable;
-// rocXolid cms elements snippet model viewers
-use Softworx\RocXolid\CMS\Elements\Components\SnippetModelViewers\SnippetModelViewer;
+// rocXolid cms elements model viewer components
+use Softworx\RocXolid\CMS\Elements\Components\ModelViewers\SnippetModelViewer;
 
 /**
  * Interface for model to be used as element for eg. page or document.
@@ -34,6 +34,27 @@ interface Element extends Paramable, Optionable, Cloneable
      * @return string
      */
     public function getDocumentEditorComponentType(): string;
+
+    /**
+     * Obtain snippet preview image used in document editor element addition.
+     *
+     * @return string
+     */
+    public function getDocumentEditorComponentSnippetPreview(): string;
+
+    /**
+     * Obtain snippet preview title used in document editor element addition.
+     *
+     * @return string
+     */
+    public function getDocumentEditorComponentSnippetTitle(): string;
+
+    /**
+     * Obtain snippet categories used in document editor element addition.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function getDocumentEditorComponentSnippetCategories(): Collection;
 
     /**
      * Set data from pivot so it can be used on frontpage and elsewhere.
@@ -70,7 +91,7 @@ interface Element extends Paramable, Optionable, Cloneable
      *
      * @param string $theme
      * @param string|null $view_package
-     * @return \Softworx\RocXolid\CMS\Elements\Components\SnippetModelViewers\SnippetModelViewer
+     * @return \Softworx\RocXolid\CMS\Elements\Components\SnippetModelViewer
      */
     public function getSnippetModelViewerComponent(string $theme, ?string $view_package = null): SnippetModelViewer;
 }

@@ -2,16 +2,20 @@
 
 namespace Softworx\RocXolid\CMS\Elements\Components\ModelViewers;
 
+// rocXolid components
 use Softworx\RocXolid\Components\ModelViewers\CrudModelViewer as RocXolidCrudModelViewer;
-use Softworx\RocXolid\CMS\Rendering\Contracts\Themeable;
-use Softworx\RocXolid\CMS\Rendering\Traits\CanBeThemed;
 
 /**
+ * CMS elements CRUD model viewer.
  *
+ * @author softworx <hello@softworx.digital>
+ * @package Softworx\RocXolid\CMS\Elements
+ * @version 1.0.0
  */
-class CrudModelViewer extends RocXolidCrudModelViewer implements Themeable
+class CrudModelViewer extends RocXolidCrudModelViewer
 {
-    use CanBeThemed;
-
+    /**
+     * {@inheritDoc}
+     */
     protected $view_package = 'rocXolid:cms-elements';
 }

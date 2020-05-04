@@ -13,4 +13,10 @@ return [
             'plural' => 'Riadok',
         ],
     ],
+    'elementable' => [
+        'categories' => [
+            'Mriežka',
+            'Horizontálne elementy',
+        ],
+    ],
 ];

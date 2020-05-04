@@ -2,11 +2,10 @@
 
 namespace Softworx\RocXolid\CMS\Elements\Models;
 
+use Faker;
 use Illuminate\Support\Collection;
 // rocXolid model contracts
 use Softworx\RocXolid\Models\Contracts\Crudable;
-// rocXolid cms model contracts
-use Softworx\RocXolid\CMS\Elements\Models\Contracts\Element;
 // rocXolid common traits
 use Softworx\RocXolid\Common\Models\Traits\HasImage;
 use Softworx\RocXolid\Common\Models\Traits\HasFile;
@@ -48,11 +47,29 @@ class Text extends AbstractComponentElement
     /**
      * {@inheritDoc}
      */
+    public function getDocumentEditorComponentSnippetPreview(): string
+    {
+        return $this->getDocumentEditorComponentSnippetPreviewAssetPath('text');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function onCreateBeforeSave(Collection $data): Crudable
     {
         // the content can be array structured
         $this->fill($data->toArray());
 
         return $this;
+    }
+
+    /**
+     * Obtain default element content.
+     *
+     * @return string
+     */
+    public function getDefaultContent(): string
+    {
+        return Faker\Factory::create('en_US')->realText();
     }
 }

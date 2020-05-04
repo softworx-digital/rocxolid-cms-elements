@@ -3,34 +3,27 @@
 namespace Softworx\RocXolid\CMS\Elements\Models\Abstraction;
 
 use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
-// rocXolid cms elements model pivots
-use Softworx\RocXolid\CMS\Elements\Models\Pivots\ContainerElement as ContainerElementPivot;
 // rocXolid cms elements model contracts
-use Softworx\RocXolid\CMS\Elements\Models\Contracts\ContainerElement;
+use Softworx\RocXolid\CMS\Elements\Models\Contracts\ListElement;
 // rocXolid cms elements models
-use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractElement;
-// rocXolid cms elements model trraits
-use Softworx\RocXolid\CMS\Elements\Models\Traits\HasElements;
+use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractComponentElement;
 
 /**
- * Abstraction for container element models.
- * Containers can have other elements assigned.
+ * Abstraction for list element models.
+ * List components serve as an item placeholder and are populated with real data when rendered.
  *
  * @author softworx <hello@softworx.digital>
  * @package Softworx\RocXolid\CMS\Elements
  * @version 1.0.0
  */
-abstract class AbstractContainerElement extends AbstractElement implements ContainerElement
+abstract class AbstractComponentListElement extends AbstractComponentElement implements ListElement
 {
-    use HasElements;
-
     /**
      * {@inheritDoc}
      */
     public function getDocumentEditorComponentType(): string
     {
-        return 'container';
+        return sprintf('component-%s', $this->getElementTypeParam());
     }
 
     /**
@@ -38,7 +31,7 @@ abstract class AbstractContainerElement extends AbstractElement implements Conta
      */
     public function getDocumentEditorComponentSnippetPreview(): string
     {
-        return $this->getDocumentEditorComponentSnippetPreviewAssetPath('container');
+        return $this->getDocumentEditorComponentSnippetPreviewAssetPath('list');
     }
 
     /**
@@ -60,16 +53,16 @@ abstract class AbstractContainerElement extends AbstractElement implements Conta
     /**
      * {@inheritDoc}
      */
-    public function getTable()
+    public function gridLayoutClass(): string
     {
-        return sprintf('cms_container_%s', $this->getTableBaseName());
+        return 'list';
     }
 
     /**
      * {@inheritDoc}
      */
-    public function elementsPivots(): HasOneOrMany
+    public function getTable()
     {
-        return $this->morphMany(ContainerElementPivot::class, 'container');
+        return sprintf('cms_component_list_%s', $this->getTableBaseName());
     }
 }

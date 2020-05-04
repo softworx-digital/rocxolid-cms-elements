@@ -21,7 +21,7 @@ use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractComponentElement;
  * @package Softworx\RocXolid\CMS\Elements
  * @version 1.0.0
  */
-abstract class AbstractProxyComponentElement extends AbstractComponentElement implements ProxyElement
+abstract class AbstractComponentProxyElement extends AbstractComponentElement implements ProxyElement
 {
     use Modellable;
 

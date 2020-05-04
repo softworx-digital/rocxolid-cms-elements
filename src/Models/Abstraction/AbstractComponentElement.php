@@ -2,6 +2,7 @@
 
 namespace Softworx\RocXolid\CMS\Elements\Models\Abstraction;
 
+use Illuminate\Support\Collection;
 // rocXolid cms elements models
 use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractElement;
 
@@ -21,6 +22,22 @@ abstract class AbstractComponentElement extends AbstractElement
     public function getDocumentEditorComponentType(): string
     {
         return sprintf('component-%s', $this->getElementTypeParam());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getDocumentEditorComponentSnippetTitle(): string
+    {
+        return $this->getModelViewerComponent()->translate('model.title.singular');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getDocumentEditorComponentSnippetCategories(): Collection
+    {
+        return collect($this->getModelViewerComponent()->translations('elementable.categories'));
     }
 
     /**

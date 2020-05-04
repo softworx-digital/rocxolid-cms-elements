@@ -12,15 +12,16 @@ use Softworx\RocXolid\Traits\MethodOptionable;
 use Softworx\RocXolid\Models\AbstractCrudModel;
 // rocXolid model traits
 use Softworx\RocXolid\Models\Traits\Cloneable;
+// rocXolid model viewer components
+use Softworx\RocXolid\Components\ModelViewers\CrudModelViewer;
 // rocXolid common traits
-use Softworx\RocXolid\Common\Models\Traits\HasWeb;
-use Softworx\RocXolid\Common\Models\Traits\UserGroupAssociatedWeb;
-// rocXolid cms model traits traits
-use Softworx\RocXolid\CMS\Models\Traits\HasFrontpageUrlAttribute;
+use Softworx\RocXolid\Common\Models\Traits as CommonTraits;
+// rocXolid cms model traits
+use Softworx\RocXolid\CMS\Models\Traits as CMSTraits;
 // rocXolid cms elements model contracts
 use Softworx\RocXolid\CMS\Elements\Models\Contracts\Element;
-
-use Softworx\RocXolid\CMS\Elements\Components\SnippetModelViewers\SnippetModelViewer;
+// rocXolid cms elements model viewer components
+use Softworx\RocXolid\CMS\Elements\Components\ModelViewers\SnippetModelViewer;
 
 /**
  * Abstraction for element models.
@@ -36,12 +37,17 @@ abstract class AbstractElement extends AbstractCrudModel implements Element
     use Paramable;
     use MethodOptionable;
     use Cloneable;
-    use HasWeb;
-    use HasFrontpageUrlAttribute;
-    //use UserGroupAssociatedWeb;
+    use CommonTraits\HasWeb;
+    //use CommonTraits\UserGroupAssociatedWeb;
+    use CMSTraits\HasFrontpageUrlAttribute;
+    use CMSTraits\HasElementsDependenciesProvider;
+    use CMSTraits\HasElementableDependencyDataProvider;
 
-    protected static $template_dir = 'page-element';
-
+    /**
+     * Model viewer type used for snippet rendering.
+     *
+     * @var string
+     */
     protected static $snippet_model_viewer_type = SnippetModelViewer::class;
 
     /**
@@ -66,6 +72,21 @@ abstract class AbstractElement extends AbstractCrudModel implements Element
     /**
      * {@inheritDoc}
      */
+    abstract public function getDocumentEditorComponentSnippetPreview(): string;
+
+    /**
+     * {@inheritDoc}
+     */
+    abstract public function getDocumentEditorComponentSnippetTitle(): string;
+
+    /**
+     * {@inheritDoc}
+     */
+    abstract public function getDocumentEditorComponentSnippetCategories(): Collection;
+
+    /**
+     * {@inheritDoc}
+     */
     abstract public function gridLayoutClass(): string;
 
     /**
@@ -73,7 +94,7 @@ abstract class AbstractElement extends AbstractCrudModel implements Element
      */
     public function getElementTypeParam(): string
     {
-        return Str::kebab((new \ReflectionClass($this))->getShortName());
+        return $this->getModelName();
     }
 
     /**
@@ -105,6 +126,17 @@ abstract class AbstractElement extends AbstractCrudModel implements Element
     /**
      * {@inheritDoc}
      */
+    public function getModelViewerComponent(?string $view_package = null): CrudModelViewer
+    {
+        $model_viewer = parent::getModelViewerComponent($view_package);
+        $model_viewer->setViewTheme($this->getDependenciesProvider()->provideViewTheme());
+
+        return $model_viewer;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getSnippetModelViewerComponent(string $theme, ?string $view_package = null): SnippetModelViewer
     {
         $model_viewer = $this->getCrudController()->getModelViewerComponent($this);
@@ -121,9 +153,23 @@ abstract class AbstractElement extends AbstractCrudModel implements Element
     }
 
     /**
-     * {@inheritDoc}
+     * Obtain asset URL to snippet preview image.
+     *
+     * @param string $image
+     * @return string
      */
-    protected function getTableBaseName()
+    protected function getDocumentEditorComponentSnippetPreviewAssetPath(string $image): string
+    {
+        return asset(sprintf('vendor/softworx/rocXolid-cms-elements/images/snippets/preview/%s.svg', $image));
+    }
+
+    /**
+     * Obtain table base name to be prefixed further.
+     * Pluralize the model's short name.
+     *
+     * @return string
+     */
+    protected function getTableBaseName(): string
     {
         return Str::plural(Str::snake((new \ReflectionClass($this))->getShortName()));
     }
