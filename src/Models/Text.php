@@ -57,10 +57,30 @@ class Text extends AbstractComponentElement
      */
     public function onCreateBeforeSave(Collection $data): Crudable
     {
-        // the content can be array structured
+        if ($data->has('content') && is_array($data->get('content'))) {
+            $data->put('content', json_encode($data->get('content')));
+        }
+
         $this->fill($data->toArray());
 
         return $this;
+    }
+
+    /**
+     * Obtain part of the content if stored as JSON.
+     *
+     * @param string $name
+     * @return string
+     */
+    public function getContentPart($name): string
+    {
+        $content = collect(json_decode($this->content));
+
+        if (!$content->has($name)) {
+            throw new \InvalidArgumentException(sprintf("Content part [%s] not found in content for [%s][%s]", $name, get_class($this), $this->getKey()));
+        }
+
+        return $content->get($name);
     }
 
     /**
