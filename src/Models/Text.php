@@ -11,6 +11,8 @@ use Softworx\RocXolid\Common\Models\Traits\HasImage;
 use Softworx\RocXolid\Common\Models\Traits\HasFile;
 // rocXolid cms models
 use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractComponentElement;
+// rocXolid cms rendering services
+use Softworx\RocXolid\CMS\Rendering\Services\ThemeRenderingService;
 
 /**
  * Text page element - most basic element.
@@ -76,11 +78,13 @@ class Text extends AbstractComponentElement
     {
         $content = collect(json_decode($this->content));
 
+        /*
         if (!$content->has($name)) {
             throw new \InvalidArgumentException(sprintf("Content part [%s] not found in content for [%s][%s]", $name, get_class($this), $this->getKey()));
         }
+        */
 
-        return $content->get($name);
+        return ThemeRenderingService::renderContent($this, $content->get($name, ''));
     }
 
     /**
