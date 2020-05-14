@@ -2,8 +2,11 @@
 
 namespace Softworx\RocXolid\CMS\Elements\Providers;
 
-use View;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
+// rocXolid rendering contracts
+use Softworx\RocXolid\Rendering\Contracts\Renderable;
 
 /**
  * rocXolid views & composers service provider.
@@ -23,7 +26,8 @@ class ViewServiceProvider extends IlluminateServiceProvider
     {
         $this
             ->load()
-            ->setComposers();
+            ->setComposers()
+            ->setDirectives();
 
         return $this;
     }
@@ -53,6 +57,22 @@ class ViewServiceProvider extends IlluminateServiceProvider
         foreach (config('rocXolid.cms-elements.general.composers', []) as $view => $composer) {
             View::composer($view, $composer);
         }
+
+        return $this;
+    }
+
+    /**
+     * Set Blade directives extensions.
+     *
+     * @return \Illuminate\Support\ServiceProvider
+     */
+    private function setDirectives(): IlluminateServiceProvider
+    {
+        /*
+        Blade::directive('test', function ($args) {
+return "<?php \Softworx\RocXolid\CMS\Elements\Providers\ViewServiceProvider::aaa($args); ?>";
+        });
+        */
 
         return $this;
     }

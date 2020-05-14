@@ -3,16 +3,11 @@
 namespace Softworx\RocXolid\CMS\Elements\Models;
 
 use Faker;
-use Illuminate\Support\Collection;
-// rocXolid model contracts
-use Softworx\RocXolid\Models\Contracts\Crudable;
 // rocXolid common traits
 use Softworx\RocXolid\Common\Models\Traits\HasImage;
 use Softworx\RocXolid\Common\Models\Traits\HasFile;
 // rocXolid cms models
 use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractComponentElement;
-// rocXolid cms rendering services
-use Softworx\RocXolid\CMS\Rendering\Services\ThemeRenderingService;
 
 /**
  * Text page element - most basic element.
@@ -57,42 +52,7 @@ class Text extends AbstractComponentElement
     /**
      * {@inheritDoc}
      */
-    public function onCreateBeforeSave(Collection $data): Crudable
-    {
-        if ($data->has('content') && is_array($data->get('content'))) {
-            $data->put('content', json_encode($data->get('content')));
-        }
-
-        $this->fill($data->toArray());
-
-        return $this;
-    }
-
-    /**
-     * Obtain part of the content if stored as JSON.
-     *
-     * @param string $name
-     * @return string
-     */
-    public function getContentPart($name): string
-    {
-        $content = collect(json_decode($this->content));
-
-        /*
-        if (!$content->has($name)) {
-            throw new \InvalidArgumentException(sprintf("Content part [%s] not found in content for [%s][%s]", $name, get_class($this), $this->getKey()));
-        }
-        */
-
-        return ThemeRenderingService::renderContent($this, $content->get($name, ''));
-    }
-
-    /**
-     * Obtain default element content.
-     *
-     * @return string
-     */
-    public function getDefaultContent(): string
+    public function getDefaultContent(?string $part = null): string
     {
         return Faker\Factory::create('en_US')->realText();
     }

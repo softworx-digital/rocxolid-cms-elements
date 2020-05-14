@@ -58,6 +58,13 @@ abstract class AbstractElement extends AbstractCrudModel implements Element
     protected $pivot_data;
 
     /**
+     * Snippet group reference.
+     *
+     * @var string
+     */
+    protected $group;
+
+    /**
      * {@inheritDoc}
      */
     protected $relationships = [
@@ -88,6 +95,30 @@ abstract class AbstractElement extends AbstractCrudModel implements Element
      * {@inheritDoc}
      */
     abstract public function gridLayoutClass(): string;
+
+    /**
+     * Option setting handler.
+     * Set element group.
+     *
+     * @param string $group
+     */
+    public function setGroup(string $group)
+    {
+        $this->group = $group;
+
+        return $this;
+    }
+
+    /**
+     * Check if element belongs to specified group.
+     *
+     * @param string $group
+     * @return bool
+     */
+    public function belongsToGroup(string $group): bool
+    {
+        return $this->group == $group;
+    }
 
     /**
      * {@inheritDoc}
