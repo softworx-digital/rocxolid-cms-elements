@@ -35,6 +35,10 @@ class GridRow extends AbstractContainerElement
      */
     public function getDocumentEditorComponentSnippetTitle(): string
     {
+        if ($this->elements()->isEmpty()) {
+            return $this->getModelViewerComponent()->translate('model.title.singular');
+        }
+
         return sprintf(
             '%s, %s %s',
             $this->getModelViewerComponent()->translate('model.title.singular'),

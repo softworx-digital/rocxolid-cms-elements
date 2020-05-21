@@ -5,8 +5,6 @@ namespace Softworx\RocXolid\CMS\Elements\Models\Abstraction;
 use Illuminate\Support\Collection;
 // rocXolid model contracts
 use Softworx\RocXolid\Models\Contracts\Crudable;
-// rocXolid cms elements services
-use Softworx\RocXolid\CMS\Elements\Services\ContentCompiler;
 // rocXolid cms elements models
 use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractElement;
 
@@ -77,13 +75,12 @@ abstract class AbstractComponentElement extends AbstractElement
     }
 
     /**
-     * Obtain the compiled content (part).
+     * Retrieve the content (part).
      *
      * @param string|null $part
-     * @param array|null $assignments
      * @return string
      */
-    public function getCompiledContent($part = null, ?array $assignments = []): string
+    public function getContent($part = null): string
     {
         $content = json_decode($this->content);
 
@@ -93,7 +90,7 @@ abstract class AbstractComponentElement extends AbstractElement
             $content = $this->content;
         }
 
-        return ContentCompiler::init($this)->process($content, collect($assignments));
+        return $content;
     }
 
     /**

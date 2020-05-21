@@ -11,7 +11,7 @@ use Softworx\RocXolid\CMS\Models\Contracts\ElementsDependenciesProvider;
 use Softworx\RocXolid\CMS\Elements\Models\Contracts\Element;
 
 /**
- * Elements factory.
+ * Elements builder (factory).
  *
  * @author softworx <hello@softworx.digital>
  * @package Softworx\RocXolid\CMS\Elements

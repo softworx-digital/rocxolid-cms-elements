@@ -5,8 +5,6 @@ namespace Softworx\RocXolid\CMS\Elements\Models;
 use Illuminate\Support\Collection;
 // rocXolid model contracts
 use Softworx\RocXolid\Models\Contracts\Crudable;
-// rocXolid cms model contracts
-use Softworx\RocXolid\CMS\Elements\Models\Contracts\Element;
 // rocXolid cms models
 use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractContainerElement;
 

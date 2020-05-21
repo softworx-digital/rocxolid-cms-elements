@@ -8,6 +8,8 @@ use Softworx\RocXolid\Contracts\Paramable;
 use Softworx\RocXolid\Contracts\Optionable;
 // rocXolid model contracts
 use Softworx\RocXolid\Models\Contracts\Cloneable;
+// rocXolid cms model contracts
+use Softworx\RocXolid\CMS\Models\Contracts\ElementsDependenciesProviderable;
 // rocXolid cms elements model viewer components
 use Softworx\RocXolid\CMS\Elements\Components\ModelViewers\SnippetModelViewer;
 
@@ -18,7 +20,7 @@ use Softworx\RocXolid\CMS\Elements\Components\ModelViewers\SnippetModelViewer;
  * @package Softworx\RocXolid\CMS\Elements
  * @version 1.0.0
  */
-interface Element extends Paramable, Optionable, Cloneable
+interface Element extends ElementsDependenciesProviderable, Paramable, Optionable, Cloneable
 {
     /**
      * Obtain element type parameter for polymorphic mapping.

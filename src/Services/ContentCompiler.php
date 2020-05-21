@@ -71,7 +71,7 @@ class ContentCompiler
         $dependencies = $this->dependencies_provider->provideDependencies();
 
         $dependencies->each(function ($dependency) use ($assignments) {
-            $dependency->setAssignment($assignments, $this->dependencies_data_provider);
+            $dependency->addAssignment($assignments, $this->dependencies_data_provider);
         });
 
         $content = $this->compileContent($content, $assignments->all());
@@ -149,8 +149,13 @@ class ContentCompiler
             return sprintf('->%s', $matches[1]);
         }, $dependency_statement);
 
-        // if (Str::startsWith($dependency_statement, 'optional') {}
-        $dependency_statement = sprintf('{!! $%s !!}', $dependency_statement);
+        // @todo: hardcoded exceptions
+        if (collect([ '{PAGENO}', '{nb}' ])->contains($dependency_statement)) {
+
+        } else {
+            // if (Str::startsWith($dependency_statement, 'optional') {}
+            $dependency_statement = sprintf('{!! $%s !!}', $dependency_statement);
+        }
 
         return $dependency_statement;
     }
