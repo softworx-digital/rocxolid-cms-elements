@@ -60,6 +60,10 @@ class GridColumn extends AbstractContainerElement
     protected function bootstrapBreakpoints(): string
     {
         return collect(json_decode($this->grid_layout, true))->map(function ($size, $breakpoint) {
+            if ($breakpoint === 'xs') {
+                return sprintf('col-%s-%s col-%s', $breakpoint, $size, $size);
+            }
+
             return sprintf('col-%s-%s', $breakpoint, $size);
         })->join(' ');
     }

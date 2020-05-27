@@ -30,6 +30,7 @@ trait HasElements
     /**
      * {@inheritDoc}
      * @todo: make this somewhat seamless for in-memory / persisted elements
+     * @todo: optimize
      */
     public function elements(): Collection
     {

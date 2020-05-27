@@ -64,9 +64,9 @@ abstract class AbstractComponentElement extends AbstractElement
     public function onCreateBeforeSave(Collection $data): Crudable
     {
         if ($data->has('content') && is_array($data->get('content'))) {
-            $content = collect($data->get('content'));
-
-            $data->put('content', ($content->count() > 1) ? $content->toJson() : $content->first());
+            // $content = collect($data->get('content'));
+            // $data->put('content', ($content->count() > 1) ? $content->toJson() : $content->first());
+            $data->put('content', collect($data->get('content'))->toJson());
         }
 
         $this->fill($data->toArray());

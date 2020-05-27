@@ -73,7 +73,11 @@ class GridRow extends AbstractContainerElement
                 ->setDependenciesProvider($this->getDependenciesProvider())
                 ->fill([
                     'grid_layout' => json_encode([
-                        'sm' => (int)(12 / $count)
+                        'xs' => (int)(12 / $count),
+                        'sm' => (int)(12 / $count),
+                        'md' => (int)(12 / $count),
+                        'lg' => (int)(12 / $count),
+                        'xl' => (int)(12 / $count),
                     ])
                 ]);
 
