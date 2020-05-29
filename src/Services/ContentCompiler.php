@@ -93,7 +93,7 @@ class ContentCompiler
         $content = mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8');
 
         $doc = new \DOMDocument('1.0', 'utf-8');
-        $doc->loadHTML($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $doc->loadHTML(sprintf('<body>%s</body>', $content), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
 
         collect($doc->getElementsByTagName('span'))->each(function($span) use ($doc, $assignments) {
             if ($span->hasAttribute('data-dependency')) {
@@ -116,6 +116,7 @@ class ContentCompiler
         });
 
         $content = $doc->saveHTML($doc->documentElement);
+        $content = str_replace([ '<body>', '</body>' ] , '', $content);
         $content = htmlspecialchars_decode($content);
 
         return $content;
