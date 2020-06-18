@@ -132,30 +132,35 @@ class ContentCompiler
     {
         $dependency_statement = $span->getAttribute('data-dependency');
 
+        // method calls
         $dependency_statement = preg_replace_callback('/::(\w+)/', function($matches) {
             return sprintf('->%s()', $matches[1]);
         }, $dependency_statement);
 
+        // attributes through \Softworx\RocXolid\Models\Traits\HasAttributes::getAttributeViewValue()
         $dependency_statement = preg_replace_callback('/:(\w+)/', function($matches) {
             return sprintf('->getAttributeViewValue(\'%s\')', $matches[1]);
         }, $dependency_statement);
 
-        /*
-        $dependency_statement = preg_replace_callback('/(\w+)\.(\w+)/', function($matches) {
-            return sprintf('optional(%s->%s)', $matches[1], $matches[2]);
-        }, $dependency_statement);
-        */
-
+        // attributes access
         $dependency_statement = preg_replace_callback('/\.(\w+)/', function($matches) {
             return sprintf('->%s', $matches[1]);
         }, $dependency_statement);
+
+        $dependency_statement = sprintf('$%s', $dependency_statement);
+
+        // making the chain optional to handle null pointers
+        while (preg_match('/(.+->\w+)->(\w+)/', $dependency_statement)) {
+            $dependency_statement = preg_replace_callback('/(.+->\w+)->(\w+)/', function($matches) {
+                return sprintf('optional(%s)->%s', $matches[1], $matches[2]);
+            }, $dependency_statement);
+        }
 
         // @todo: hardcoded exceptions
         if (collect([ '{PAGENO}', '{nb}' ])->contains($dependency_statement)) {
 
         } else {
-            // if (Str::startsWith($dependency_statement, 'optional') {}
-            $dependency_statement = sprintf('{!! $%s !!}', $dependency_statement);
+            $dependency_statement = sprintf('{!! %s !!}', $dependency_statement);
         }
 
         return $dependency_statement;
