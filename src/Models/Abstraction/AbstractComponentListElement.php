@@ -39,7 +39,7 @@ abstract class AbstractComponentListElement extends AbstractComponentElement imp
      */
     public function getDocumentEditorComponentSnippetTitle(): string
     {
-        return $this->getModelViewerComponent()->translate('model.title.singular');
+        return $this->getModelViewerComponent()->translate(sprintf('model.title.%s', $this->getTemplate()));
     }
 
     /**

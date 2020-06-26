@@ -31,7 +31,7 @@ abstract class AbstractComponentElement extends AbstractElement
      */
     public function getDocumentEditorComponentSnippetTitle(): string
     {
-        return $this->getModelViewerComponent()->translate('model.title.singular');
+        return $this->getModelViewerComponent()->translate(sprintf('model.title.%s', $this->getTemplate()));
     }
 
     /**
@@ -90,7 +90,7 @@ abstract class AbstractComponentElement extends AbstractElement
             $content = $this->content;
         }
 
-        return $content;
+        return $content ?? '';
     }
 
     /**

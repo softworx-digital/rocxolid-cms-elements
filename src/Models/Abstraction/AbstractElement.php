@@ -16,6 +16,8 @@ use Softworx\RocXolid\Models\Traits\Cloneable;
 use Softworx\RocXolid\Components\ModelViewers\CrudModelViewer;
 // rocXolid common traits
 use Softworx\RocXolid\Common\Models\Traits as CommonTraits;
+// rocXolid cms facades
+use Softworx\RocXolid\CMS\Facades\ThemeManager;
 // rocXolid cms model traits
 use Softworx\RocXolid\CMS\Models\Traits as CMSTraits;
 // rocXolid cms elements model contracts
@@ -98,7 +100,7 @@ abstract class AbstractElement extends AbstractCrudModel implements Element
 
     /**
      * Option setting handler.
-     * Set element group.
+     * Set element snippet group.
      *
      * @param string $group
      */
@@ -107,6 +109,31 @@ abstract class AbstractElement extends AbstractCrudModel implements Element
         $this->group = $group;
 
         return $this;
+    }
+
+    /**
+     * Option setting handler.
+     * Set element snippet template.
+     *
+     * @param string $template
+     */
+    public function setTemplate(string $template)
+    {
+        $this->setPivotData(collect([
+            'template' => $template
+        ]));
+
+        return $this;
+    }
+
+    /**
+     * Element theme template name getter.
+     *
+     * @param string $template
+     */
+    public function getTemplate(): string
+    {
+        return optional($this->pivot_data)->get('template') ?? 'default';
     }
 
     /**
@@ -133,7 +160,7 @@ abstract class AbstractElement extends AbstractCrudModel implements Element
      */
     public function setPivotData(Collection $pivot_data): Element
     {
-        $this->pivot_data = $pivot_data;
+        $this->pivot_data = collect($this->pivot_data)->merge($pivot_data);
 
         return $this;
     }
@@ -181,6 +208,14 @@ abstract class AbstractElement extends AbstractCrudModel implements Element
         }
 
         return $snippet_model_viewer;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public static function getAvailableTemplates(string $theme): Collection
+    {
+        return ThemeManager::getComponentTemplates($theme, (new static())->getModelViewerComponent());
     }
 
     /**

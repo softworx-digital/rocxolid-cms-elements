@@ -132,6 +132,11 @@ class ContentCompiler
     {
         $dependency_statement = $span->getAttribute('data-dependency');
 
+        // @todo: hardcoded exceptions
+        if (collect([ '{PAGENO}', '{nb}' ])->contains($dependency_statement)) {
+            return $dependency_statement;
+        }
+
         // method calls
         $dependency_statement = preg_replace_callback('/::(\w+)/', function($matches) {
             return sprintf('->%s()', $matches[1]);
@@ -147,6 +152,7 @@ class ContentCompiler
             return sprintf('->%s', $matches[1]);
         }, $dependency_statement);
 
+        // make it a variable to be interpreted
         $dependency_statement = sprintf('$%s', $dependency_statement);
 
         // making the chain optional to handle null pointers
@@ -156,12 +162,7 @@ class ContentCompiler
             }, $dependency_statement);
         }
 
-        // @todo: hardcoded exceptions
-        if (collect([ '{PAGENO}', '{nb}' ])->contains($dependency_statement)) {
-
-        } else {
-            $dependency_statement = sprintf('{!! %s !!}', $dependency_statement);
-        }
+        $dependency_statement = sprintf('{!! %s !!}', $dependency_statement);
 
         return $dependency_statement;
     }

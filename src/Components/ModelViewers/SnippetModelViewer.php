@@ -58,6 +58,7 @@ class SnippetModelViewer extends CrudModelViewer implements HigherOrderComponent
         return collect([
             'data-element-type' => $model->getElementTypeParam(),
             'data-element-id' => $model->getKey(),
+            'data-element-template' => $model->getTemplate(),
         ])->filter()->map(function ($value, $attribute) {
             return sprintf('%s="%s"', $attribute, $value);
         })->join(' ');

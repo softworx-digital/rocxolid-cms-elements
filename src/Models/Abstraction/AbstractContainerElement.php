@@ -46,7 +46,7 @@ abstract class AbstractContainerElement extends AbstractElement implements Conta
      */
     public function getDocumentEditorComponentSnippetTitle(): string
     {
-        return $this->getModelViewerComponent()->translate('model.title.singular');
+        return $this->getModelViewerComponent()->translate(sprintf('model.title.%s', $this->getTemplate()));
     }
 
     /**

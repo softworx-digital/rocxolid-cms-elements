@@ -11,6 +11,7 @@ return [
         'title' => [
             'singular' => 'Textový blok',
             'plural' => 'Textový blok',
+            'default' => 'Textový blok',
         ],
     ],
     'elementable' => [

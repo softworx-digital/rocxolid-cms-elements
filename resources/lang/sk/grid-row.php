@@ -11,6 +11,7 @@ return [
         'title' => [
             'singular' => 'Riadok',
             'plural' => 'Riadok',
+            'default' => 'Riadok',
         ],
     ],
     'elementable' => [

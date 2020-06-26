@@ -11,6 +11,7 @@ return [
         'title' => [
             'singular' => 'Stĺpec',
             'plural' => 'Stĺpce',
+            'default' => 'Stĺpec',
         ],
     ],
     'elementable' => [

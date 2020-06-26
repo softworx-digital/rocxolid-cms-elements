@@ -96,4 +96,12 @@ interface Element extends ElementsDependenciesProviderable, Paramable, Optionabl
      * @return \Softworx\RocXolid\CMS\Elements\Components\SnippetModelViewer
      */
     public function getSnippetModelViewerComponent(string $theme, ?string $view_package = null): SnippetModelViewer;
+
+    /**
+     * Obtain available templates for an element.
+     *
+     * @param string $theme
+     * @return \Illuminate\Support\Collection
+     */
+    public static function getAvailableTemplates(string $theme): Collection;
 }
