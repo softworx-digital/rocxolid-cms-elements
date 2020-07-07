@@ -40,7 +40,12 @@ trait HasElements
             ->orderBy('position')
             ->get()
             ->map(function ($pivot) {
-                return ElementBuilder::buildElement($pivot, $this->getDependenciesProvider(), $this->getDependenciesDataProvider());
+                return ElementBuilder::buildElement(
+                    $pivot,
+                    $this->getDependenciesProvider(),
+                    $this->getMutatorsProvider(),
+                    $this->getDependenciesDataProvider()
+                );
             });
 
         return $elements->isNotEmpty() ? $elements : $this->elementsBag();

@@ -43,6 +43,7 @@ abstract class AbstractElement extends AbstractCrudModel implements Element
     //use CommonTraits\UserGroupAssociatedWeb;
     use CMSTraits\HasFrontpageUrlAttribute;
     use CMSTraits\HasElementsDependenciesProvider;
+    use CMSTraits\HasElementsMutatorsProvider;
     use CMSTraits\HasElementableDependencyDataProvider;
 
     /**

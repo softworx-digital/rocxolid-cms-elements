@@ -9,6 +9,7 @@ use Softworx\RocXolid\CMS\ElementableDependencies\Contracts\ElementableDependenc
 use Softworx\RocXolid\CMS\Models\Contracts\ElementsDependenciesProvider;
 // rocXolid cms elements contracts
 use Softworx\RocXolid\CMS\Elements\Models\Contracts\Element;
+use Softworx\RocXolid\CMS\Models\Contracts\ElementsMutatorsProvider;
 
 /**
  * Elements builder (factory).
@@ -24,18 +25,21 @@ class ElementBuilder
      *
      * @param \Illuminate\Database\Eloquent\Relations\MorphPivot $pivot
      * @param \Softworx\RocXolid\CMS\Models\Contracts\ElementsDependenciesProvider $depencies_provider
+     * @param \Softworx\RocXolid\CMS\Models\Contracts\ElementsMutatorsProvider $mutators_provider
      * @param \Softworx\RocXolid\CMS\ElementableDependencies\Contracts\ElementableDependencyDataProvider $depencies_provider
      * @return \Softworx\RocXolid\CMS\Elements\Models\Contracts\Element
      */
     public static function buildElement(
         MorphPivot $pivot,
         ElementsDependenciesProvider $depencies_provider,
+        ElementsMutatorsProvider $mutators_provider,
         ElementableDependencyDataProvider $depencies_data_provider
     ): Element {
         $element = $pivot->element;
 
         $element
             ->setDependenciesProvider($depencies_provider) // propagate dependencies provider
+            ->setMutatorsProvider($mutators_provider) // propagate mutators provider
             ->setDependenciesDataProvider($depencies_data_provider) // propagate dependencies data provider
             ->setPivotData(collect($pivot->attributesToArray())); // set data obtained by pivot
 
@@ -47,6 +51,7 @@ class ElementBuilder
      *
      * @param string $type
      * @param \Softworx\RocXolid\CMS\Models\Contracts\ElementsDependenciesProvider $depencies_provider
+     * @param \Softworx\RocXolid\CMS\Models\Contracts\ElementsMutatorsProvider $mutators_provider
      * @param \Softworx\RocXolid\CMS\ElementableDependencies\Contracts\ElementableDependencyDataProvider $depencies_provider
      * @param \Illuminate\Support\Collection $options
      * @return \Softworx\RocXolid\CMS\Elements\Models\Contracts\Element
@@ -54,6 +59,7 @@ class ElementBuilder
     public static function buildSnippetElement(
         string $type,
         ElementsDependenciesProvider $depencies_provider,
+        ElementsMutatorsProvider $mutators_provider,
         ElementableDependencyDataProvider $depencies_data_provider,
         Collection $options
     ): Element {
@@ -61,6 +67,7 @@ class ElementBuilder
 
         $element
             ->setDependenciesProvider($depencies_provider) // propagate dependencies provider
+            ->setMutatorsProvider($mutators_provider) // propagate mutators provider
             ->setDependenciesDataProvider($depencies_data_provider) // propagate dependencies data provider
             ->prepareSnippetsData($options); // prepare data for snippet
 

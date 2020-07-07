@@ -33,6 +33,13 @@ class ContentCompiler
     private $dependencies_data_provider;
 
     /**
+     * Mutators provider reference.
+     *
+     * @var \Softworx\RocXolid\CMS\Models\Contracts\ElementsMutatorsProvider
+     */
+    private $mutators_provider;
+
+    /**
      * Constructor.
      *
      * @param \Softworx\RocXolid\CMS\Elements\Models\Contracts\Element $element
@@ -41,6 +48,7 @@ class ContentCompiler
     {
         $this->dependencies_provider = $element->getDependenciesProvider();
         $this->dependencies_data_provider = $element->getDependenciesDataProvider();
+        $this->mutators_provider = $element->getMutatorsProvider();
     }
 
     /**
@@ -83,6 +91,7 @@ class ContentCompiler
      * Compile the provided content:
      *  replace placeholders with real dependency values
      *  take actions on empty dependency values
+     *  process value mutators
      *
      * @param string $content
      * @param array $assignments
@@ -97,21 +106,13 @@ class ContentCompiler
 
         collect($doc->getElementsByTagName('span'))->each(function($span) use ($doc, $assignments) {
             if ($span->hasAttribute('data-dependency')) {
-                $dependency_statement = $this->dependencyStatement($span);
-                $dependency_statement_value = RenderingService::render($dependency_statement, $assignments);
+                $this->handleDependencyStatementNode($doc, $span, $assignments);
+            }
+        });
 
-                if (blank($dependency_statement_value) && $span->hasAttribute('data-dependency-on-empty')) {
-
-                    $dependency_on_empty_handler = sprintf('onEmptyDependency%s', Str::studly($span->getAttribute('data-dependency-on-empty')));
-
-                    if (!method_exists($this, $dependency_on_empty_handler)) {
-                        throw new \RuntimeException(sprintf('Method for dependency handler %s::%s() does not exist', get_class($this), $dependency_on_empty_handler));
-                    }
-
-                    $this->{$dependency_on_empty_handler}($span);
-                } else {
-                    $span->parentNode->replaceChild($doc->createTextNode($dependency_statement_value), $span);
-                }
+        collect($doc->getElementsByTagName('span'))->each(function($span) use ($doc, $assignments) {
+            if ($span->hasAttribute('data-mutator')) {
+                $this->handleMutatorStatementNode($doc, $span, $assignments);
             }
         });
 
@@ -122,13 +123,40 @@ class ContentCompiler
         return $content;
     }
 
+    protected function handleDependencyStatementNode(\DOMDocument &$doc, \DOMElement &$span, $assignments)
+    {
+        $dependency_statement = $this->makeDependencyStatement($span);
+        $dependency_statement_value = RenderingService::render($dependency_statement, $assignments);
+
+        if (blank($dependency_statement_value) && $span->hasAttribute('data-dependency-on-empty')) {
+
+            $dependency_on_empty_handler = sprintf('onEmptyDependency%s', Str::studly($span->getAttribute('data-dependency-on-empty')));
+
+            if (!method_exists($this, $dependency_on_empty_handler)) {
+                throw new \RuntimeException(sprintf('Method for dependency handler %s::%s() does not exist', get_class($this), $dependency_on_empty_handler));
+            }
+
+            $this->{$dependency_on_empty_handler}($span);
+        } else {
+            $span->parentNode->replaceChild($doc->createTextNode($dependency_statement_value), $span);
+        }
+    }
+
+    protected function handleMutatorStatementNode(\DOMDocument &$doc, \DOMElement &$span, $assignments)
+    {
+        $mutator = $this->mutators_provider->getMutator($span->getAttribute('data-mutator'));
+        $mutated = $mutator->mutate($this->dependencies_data_provider, $span->nodeValue);
+
+        $span->parentNode->replaceChild($doc->createTextNode($mutated), $span);
+    }
+
     /**
      * Create blade statement for dependency.
      *
-     * @param \DOMNode $span
+     * @param \DOMElement $span
      * @return string
      */
-    protected function dependencyStatement(\DOMNode $span): string
+    protected function makeDependencyStatement(\DOMElement $span): string
     {
         $dependency_statement = $span->getAttribute('data-dependency');
 
@@ -162,6 +190,13 @@ class ContentCompiler
             }, $dependency_statement);
         }
 
+        /*
+         * The goal was to compile dependency values & mutators in one iteration
+        if (!$this->isMutatorMutatorChild($span)) {
+            $dependency_statement = sprintf('{!! %s !!}', $dependency_statement);
+        }
+        */
+
         $dependency_statement = sprintf('{!! %s !!}', $dependency_statement);
 
         return $dependency_statement;
@@ -170,10 +205,17 @@ class ContentCompiler
     /**
      * Action to take if empty dependency value - remove parent node.
      *
-     * @param \DOMNode $span
+     * @param \DOMElement $span
      */
-    protected function onEmptyDependencyRemoveParent(\DOMNode &$span)
+    protected function onEmptyDependencyRemoveParent(\DOMElement &$span)
     {
         $span->parentNode->parentNode->removeChild($span->parentNode);
+    }
+
+    protected function isMutatorMutatorChild(\DOMElement $span)
+    {
+        return ($span->parentNode instanceof \DOMElement)
+            && ($span->parentNode->nodeName === 'span')
+            && ($span->parentNode->hasAttribute('data-mutator'));
     }
 }
