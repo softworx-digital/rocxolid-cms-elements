@@ -76,11 +76,11 @@ class ContentCompiler
             return $content;
         }
 
-        $dependencies = $this->dependencies_provider->provideDependencies();
-
-        $dependencies->each(function ($dependency) use ($assignments) {
-            $dependency->addAssignment($assignments, $this->dependencies_data_provider);
-        });
+        $this->dependencies_provider
+            ->provideDependencies()
+            ->each(function ($dependency) use ($assignments) {
+                $dependency->addAssignment($assignments, $this->dependencies_data_provider);
+            });
 
         $content = $this->compileContent($content, $assignments->all());
 
@@ -144,10 +144,11 @@ class ContentCompiler
 
     protected function handleMutatorStatementNode(\DOMDocument &$doc, \DOMElement &$span, $assignments)
     {
-        $mutator = $this->mutators_provider->getMutator($span->getAttribute('data-mutator'));
-        $mutated = $mutator->mutate($this->dependencies_data_provider, $span->nodeValue);
+        if ($mutator = $this->mutators_provider->getMutator($span->getAttribute('data-mutator'))) {
+            $mutated = $mutator->mutate($this->dependencies_data_provider, $span->nodeValue);
 
-        $span->parentNode->replaceChild($doc->createTextNode($mutated), $span);
+            $span->parentNode->replaceChild($doc->createTextNode($mutated), $span);
+        }
     }
 
     /**
