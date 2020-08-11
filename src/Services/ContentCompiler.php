@@ -104,17 +104,19 @@ class ContentCompiler
         $doc = new \DOMDocument('1.0', 'utf-8');
         $doc->loadHTML(sprintf('<body>%s</body>', $content), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
 
-        collect($doc->getElementsByTagName('span'))->each(function($span) use ($doc, $assignments) {
+        collect($doc->getElementsByTagName('span'))->each(function (\DOMElement $span) use ($doc, $assignments) {
             if ($span->hasAttribute('data-dependency')) {
                 $this->handleDependencyStatementNode($doc, $span, $assignments);
             }
         });
 
-        collect($doc->getElementsByTagName('span'))->each(function($span) use ($doc, $assignments) {
-            if ($span->hasAttribute('data-mutator')) {
-                $this->handleMutatorStatementNode($doc, $span, $assignments);
-            }
-        });
+        while ($this->nodeHasMutators($doc)) {
+            collect($doc->getElementsByTagName('span'))->each(function (\DOMElement $span) use ($doc, $assignments) {
+                if ($span->hasAttribute('data-mutator') && !$this->nodeHasMutators($span)) {
+                    $this->handleMutatorStatementNode($doc, $span, $assignments);
+                }
+            });
+        }
 
         $content = $doc->saveHTML($doc->documentElement);
         $content = str_replace([ '<body>', '</body>' ] , '', $content);
@@ -167,17 +169,17 @@ class ContentCompiler
         }
 
         // method calls
-        $dependency_statement = preg_replace_callback('/::(\w+)/', function($matches) {
+        $dependency_statement = preg_replace_callback('/::(\w+)/', function ($matches) {
             return sprintf('->%s()', $matches[1]);
         }, $dependency_statement);
 
         // attributes through \Softworx\RocXolid\Models\Traits\HasAttributes::getAttributeViewValue()
-        $dependency_statement = preg_replace_callback('/:(\w+)/', function($matches) {
+        $dependency_statement = preg_replace_callback('/:(\w+)/', function ($matches) {
             return sprintf('->getAttributeViewValue(\'%s\')', $matches[1]);
         }, $dependency_statement);
 
         // attributes access
-        $dependency_statement = preg_replace_callback('/\.(\w+)/', function($matches) {
+        $dependency_statement = preg_replace_callback('/\.(\w+)/', function ($matches) {
             return sprintf('->%s', $matches[1]);
         }, $dependency_statement);
 
@@ -186,7 +188,7 @@ class ContentCompiler
 
         // making the chain optional to handle null pointers
         while (preg_match('/(.+->\w+)->(\w+)/', $dependency_statement)) {
-            $dependency_statement = preg_replace_callback('/(.+->\w+)->(\w+)/', function($matches) {
+            $dependency_statement = preg_replace_callback('/(.+->\w+)->(\w+)/', function ($matches) {
                 return sprintf('optional(%s)->%s', $matches[1], $matches[2]);
             }, $dependency_statement);
         }
@@ -218,5 +220,12 @@ class ContentCompiler
         return ($span->parentNode instanceof \DOMElement)
             && ($span->parentNode->nodeName === 'span')
             && ($span->parentNode->hasAttribute('data-mutator'));
+    }
+
+    protected function nodeHasMutators(\DOMNode $node): bool
+    {
+        return collect($node->getElementsByTagName('span'))->filter(function (\DOMElement $span) {
+            return $span->hasAttribute('data-mutator');
+        })->isNotEmpty();
     }
 }
