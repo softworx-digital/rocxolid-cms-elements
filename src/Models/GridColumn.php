@@ -22,6 +22,7 @@ class GridColumn extends AbstractContainerElement
      */
     protected $fillable = [
         'grid_layout',
+        'meta_data',
     ];
 
     /**
@@ -38,7 +39,8 @@ class GridColumn extends AbstractContainerElement
     public function onCreateBeforeSave(Collection $data): Crudable
     {
         $this->fill([
-            'grid_layout' => collect($data->get('gridLayout'))->toJson(),
+            'grid_layout' => $data->has('gridLayout') ? collect($data->get('gridLayout'))->toJson() : null,
+            'meta_data' => $data->has('metaData') ? collect($data->get('metaData'))->toJson() : null,
         ]);
 
         return $this;
@@ -50,6 +52,14 @@ class GridColumn extends AbstractContainerElement
     public function gridLayoutClass(): string
     {
         return $this->bootstrapBreakpoints();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getMetaData(): ?string
+    {
+        return $this->meta_data;
     }
 
     /**

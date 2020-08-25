@@ -24,6 +24,22 @@ use Softworx\RocXolid\CMS\Elements\Components\ModelViewers\SnippetModelViewer;
 interface Element extends ElementsDependenciesProviderable, ElementsMutatorsProviderable, Paramable, Optionable, Cloneable
 {
     /**
+     * Check if element content will be empty (when rendered) with given complementary assignments.
+     *
+     * @param array $assignments
+     * @return bool
+     */
+    public function isEmptyContent(array $assignments = []): bool;
+
+    /**
+     * Render element content with given complementary assignments.
+     *
+     * @param array $assignments
+     * @return string
+     */
+    public function renderContent(array $assignments = []): string;
+
+    /**
      * Obtain element type parameter for polymorphic mapping.
      *
      * @return string
@@ -80,6 +96,13 @@ interface Element extends ElementsDependenciesProviderable, ElementsMutatorsProv
      * @return string
      */
     public function gridLayoutClass(): string;
+
+    /**
+     * Obtain element meta data.
+     *
+     * @return string|null
+     */
+    public function getMetaData(): ?string;
 
     /**
      * Prepare the instance for snippets display.

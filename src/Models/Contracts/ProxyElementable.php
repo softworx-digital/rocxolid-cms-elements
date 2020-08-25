@@ -11,7 +11,7 @@ use Softworx\RocXolid\CMS\Elements\Models\Contracts\Elementable;
  * Enables models to have elements and proxy elements assigned.
  *
  * @author softworx <hello@softworx.digital>
- * @package Softworx\RocXolid\CMS
+ * @package Softworx\RocXolid\CMS\Elements
  * @version 1.0.0
  * @todo: define
  */

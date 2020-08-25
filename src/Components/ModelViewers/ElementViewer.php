@@ -40,8 +40,9 @@ class ElementViewer extends CrudModelViewer implements Themeable
             'data-element-type' => $this->getModel()->getElementTypeParam(),
             'data-element-id' => $this->getModel()->getKey(),
             'data-element-template' => $this->getModel()->getTemplate(),
+            'data-element-meta' => $this->getModel()->getMetaData(),
         ])->filter()->map(function ($value, $attribute) {
-            return sprintf('%s="%s"', $attribute, $value);
+            return sprintf('%s="%s"', $attribute, htmlspecialchars($value, ENT_QUOTES, 'UTF-8'));
         })->join(' ');
     }
 

@@ -13,7 +13,7 @@ use Softworx\RocXolid\CMS\Elements\Models\Contracts\Element;
  * Element content compiler.
  *
  * @author softworx <hello@softworx.digital>
- * @package Softworx\RocXolid
+ * @package Softworx\RocXolid\CMS\Elements
  * @version 1.0.0
  */
 class ContentCompiler

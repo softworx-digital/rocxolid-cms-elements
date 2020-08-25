@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 // rocXolid cms elements model pivots
 use Softworx\RocXolid\CMS\Elements\Models\Pivots\ContainerElement as ContainerElementPivot;
 // rocXolid cms elements model contracts
+use Softworx\RocXolid\CMS\Elements\Models\Contracts\Element;
 use Softworx\RocXolid\CMS\Elements\Models\Contracts\ContainerElement;
 // rocXolid cms elements models
 use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractElement;
@@ -71,5 +72,15 @@ abstract class AbstractContainerElement extends AbstractElement implements Conta
     public function elementsPivots(): HasOneOrMany
     {
         return $this->morphMany(ContainerElementPivot::class, 'container');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function nonEmptyElements(): Collection
+    {
+        return $this->elements()->filter(function (Element $element) {
+            return !$element->isEmptyContent();
+        });
     }
 }

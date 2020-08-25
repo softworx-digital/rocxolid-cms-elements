@@ -100,6 +100,30 @@ abstract class AbstractElement extends AbstractCrudModel implements Element
     abstract public function gridLayoutClass(): string;
 
     /**
+     * {@inheritDoc}
+     */
+    public function getMetaData(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function isEmptyContent(array $assignments = []): bool
+    {
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function renderContent(array $assignments = []): string
+    {
+        return $this->getModelViewerComponent()->render($this->getPivotData()->get('template'), $assignments);
+    }
+
+    /**
      * Option setting handler.
      * Set element snippet group.
      *

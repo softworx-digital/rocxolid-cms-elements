@@ -15,7 +15,7 @@ use Softworx\RocXolid\CMS\Elements\Builders\ElementBuilder;
  * Enables models to have elements assigned.
  *
  * @author softworx <hello@softworx.digital>
- * @package Softworx\RocXolid\CMS
+ * @package Softworx\RocXolid\CMS\Elements
  * @version 1.0.0
  */
 trait HasElements
@@ -29,7 +29,7 @@ trait HasElements
 
     /**
      * {@inheritDoc}
-     * @todo: make this somewhat seamless for in-memory / persisted elements
+     * @todo: make this somewhat seamless for in-memory (elementsBag) / persisted elements
      * @todo: optimize
      */
     public function elements(): Collection

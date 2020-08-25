@@ -14,7 +14,7 @@ use Softworx\RocXolid\CMS\Elements\Models\Contracts\Element;
  * Enables models to have elements assigned.
  *
  * @author softworx <hello@softworx.digital>
- * @package Softworx\RocXolid\CMS
+ * @package Softworx\RocXolid\CMS\Elements
  * @version 1.0.0
  */
 interface Elementable extends Crudable

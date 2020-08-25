@@ -13,7 +13,7 @@ use Softworx\RocXolid\CMS\Elements\Models\Contracts\Element;
  * Cross model abstraction to connect elementable with morphed elements.
  *
  * @author softworx <hello@softworx.digital>
- * @package Softworx\RocXolid\CMS
+ * @package Softworx\RocXolid\CMS\Elements
  * @version 1.0.0
  * @todo: this is actually not a MorphPivot, since the MorphManyThrough is not supported
  */

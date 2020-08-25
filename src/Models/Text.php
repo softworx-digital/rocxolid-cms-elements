@@ -4,8 +4,7 @@ namespace Softworx\RocXolid\CMS\Elements\Models;
 
 use Faker;
 // rocXolid common traits
-use Softworx\RocXolid\Common\Models\Traits\HasImage;
-use Softworx\RocXolid\Common\Models\Traits\HasFile;
+use Softworx\RocXolid\Common\Models\Traits as CommonTraits;
 // rocXolid cms models
 use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractComponentElement;
 
@@ -18,8 +17,9 @@ use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractComponentElement;
  */
 class Text extends AbstractComponentElement
 {
-    use HasImage;
-    use HasFile;
+    use Traits\HasCachedContent;
+    use CommonTraits\HasImage;
+    use CommonTraits\HasFile;
 
     /**
      * {@inheritDoc}
@@ -55,5 +55,21 @@ class Text extends AbstractComponentElement
     public function getDefaultContent(?string $part = null): string
     {
         return Faker\Factory::create('en_US')->realText();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function isEmptyContent(array $assignments = []): bool
+    {
+        return $this->isEmptyCompiledContent($assignments);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function renderContent(array $assignments = []): string
+    {
+        return $this->getCompiledContent($assignments);
     }
 }
