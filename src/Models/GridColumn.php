@@ -3,9 +3,8 @@
 namespace Softworx\RocXolid\CMS\Elements\Models;
 
 use Illuminate\Support\Collection;
-// rocXolid model contracts
-use Softworx\RocXolid\Models\Contracts\Crudable;
-// rocXolid cms models
+// rocXolid cms elements models
+use Softworx\RocXolid\CMS\Elements\Models\Contracts\Element;
 use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractContainerElement;
 
 /**
@@ -17,18 +16,12 @@ use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractContainerElement;
  */
 class GridColumn extends AbstractContainerElement
 {
-    /**
-     * {@inheritDoc}
-     */
-    protected $fillable = [
-        'grid_layout',
-        'meta_data',
-    ];
+    use Traits\HasGridLayout;
 
     /**
      * {@inheritDoc}
      */
-    public function getDocumentEditorComponentType(): string
+    public function getDocumentEditorElementType(): string
     {
         return 'container-content';
     }
@@ -36,14 +29,11 @@ class GridColumn extends AbstractContainerElement
     /**
      * {@inheritDoc}
      */
-    public function onCreateBeforeSave(Collection $data): Crudable
+    public function setElementData(Collection $data): Element
     {
-        $this->fill([
-            'grid_layout' => $data->has('gridLayout') ? collect($data->get('gridLayout'))->toJson() : null,
-            'meta_data' => $data->has('metaData') ? collect($data->get('metaData'))->toJson() : null,
-        ]);
+        $this->fillGridLayout($data);
 
-        return $this;
+        return parent::setElementData($data);
     }
 
     /**
@@ -55,14 +45,6 @@ class GridColumn extends AbstractContainerElement
     }
 
     /**
-     * {@inheritDoc}
-     */
-    public function getMetaData(): ?string
-    {
-        return $this->meta_data;
-    }
-
-    /**
      * Make bootstrap column breakpoints.
      *
      * @return string
@@ -70,11 +52,9 @@ class GridColumn extends AbstractContainerElement
     protected function bootstrapBreakpoints(): string
     {
         return collect(json_decode($this->grid_layout, true))->map(function ($size, $breakpoint) {
-            if ($breakpoint === 'xs') {
-                return sprintf('col-%s-%s col-%s', $breakpoint, $size, $size);
-            }
-
-            return sprintf('col-%s-%s', $breakpoint, $size);
+            return ($breakpoint === 'xs')
+                ? sprintf('col-%s-%s col-%s', $breakpoint, $size, $size)
+                : sprintf('col-%s-%s', $breakpoint, $size);
         })->join(' ');
     }
 }

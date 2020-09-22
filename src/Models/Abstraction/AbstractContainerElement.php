@@ -11,8 +11,8 @@ use Softworx\RocXolid\CMS\Elements\Models\Contracts\Element;
 use Softworx\RocXolid\CMS\Elements\Models\Contracts\ContainerElement;
 // rocXolid cms elements models
 use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractElement;
-// rocXolid cms elements model trraits
-use Softworx\RocXolid\CMS\Elements\Models\Traits\HasElements;
+// rocXolid cms elements model traits
+use Softworx\RocXolid\CMS\Elements\Models\Traits as Traits;
 
 /**
  * Abstraction for container element models.
@@ -24,12 +24,12 @@ use Softworx\RocXolid\CMS\Elements\Models\Traits\HasElements;
  */
 abstract class AbstractContainerElement extends AbstractElement implements ContainerElement
 {
-    use HasElements;
+    use Traits\HasElements;
 
     /**
      * {@inheritDoc}
      */
-    public function getDocumentEditorComponentType(): string
+    public function getDocumentEditorElementType(): string
     {
         return 'container';
     }
@@ -37,15 +37,15 @@ abstract class AbstractContainerElement extends AbstractElement implements Conta
     /**
      * {@inheritDoc}
      */
-    public function getDocumentEditorComponentSnippetPreview(): string
+    public function getDocumentEditorElementSnippetPreview(): string
     {
-        return $this->getDocumentEditorComponentSnippetPreviewAssetPath('container');
+        return $this->getDocumentEditorElementSnippetPreviewAssetPath('container');
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getDocumentEditorComponentSnippetTitle(): string
+    public function getDocumentEditorElementSnippetTitle(): string
     {
         return $this->getModelViewerComponent()->translate(sprintf('model.title.%s', $this->getTemplate()));
     }
@@ -53,7 +53,7 @@ abstract class AbstractContainerElement extends AbstractElement implements Conta
     /**
      * {@inheritDoc}
      */
-    public function getDocumentEditorComponentSnippetCategories(): Collection
+    public function getDocumentEditorElementSnippetCategories(): Collection
     {
         return collect($this->getModelViewerComponent()->translations('elementable.categories'));
     }
@@ -82,5 +82,13 @@ abstract class AbstractContainerElement extends AbstractElement implements Conta
         return $this->elements()->filter(function (Element $element) {
             return !$element->isEmptyContent();
         });
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected static function getConfigFilePathKey(): string
+    {
+        return 'rocXolid.cms-elements.container';
     }
 }

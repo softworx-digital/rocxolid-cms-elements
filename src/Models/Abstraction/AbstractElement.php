@@ -12,6 +12,8 @@ use Softworx\RocXolid\Traits\MethodOptionable;
 use Softworx\RocXolid\Models\AbstractCrudModel;
 // rocXolid model traits
 use Softworx\RocXolid\Models\Traits\Cloneable;
+// rocXolid model contracts
+use Softworx\RocXolid\Models\Contracts\Crudable;
 // rocXolid model viewer components
 use Softworx\RocXolid\Components\ModelViewers\CrudModelViewer;
 // rocXolid common traits
@@ -21,13 +23,16 @@ use Softworx\RocXolid\CMS\Facades\ThemeManager;
 // rocXolid cms model traits
 use Softworx\RocXolid\CMS\Models\Traits as CMSTraits;
 // rocXolid cms elements model contracts
+use Softworx\RocXolid\CMS\Elements\Models\Contracts\Elementable;
 use Softworx\RocXolid\CMS\Elements\Models\Contracts\Element;
+// rocXolid cms elements model traits
+use Softworx\RocXolid\CMS\Elements\Models\Traits as Traits;
 // rocXolid cms elements model viewer components
 use Softworx\RocXolid\CMS\Elements\Components\ModelViewers\SnippetModelViewer;
 
 /**
  * Abstraction for element models.
- * Elements can be assigned to a elementable document (eg. page).
+ * Elements can be assigned to an elementable (eg. page or document).
  *
  * @author softworx <hello@softworx.digital>
  * @package Softworx\RocXolid\CMS\Elements
@@ -45,18 +50,20 @@ abstract class AbstractElement extends AbstractCrudModel implements Element
     use CMSTraits\HasElementsDependenciesProvider;
     use CMSTraits\HasElementsMutatorsProvider;
     use CMSTraits\HasElementableDependencyDataProvider;
+    use Traits\HasMetaData;
 
     /**
-     * Model viewer type used for snippet rendering.
-     *
-     * @var string
+     * @var string $snippet_model_viewer_type Model viewer type used for snippet rendering.
      */
     protected static $snippet_model_viewer_type = SnippetModelViewer::class;
 
     /**
-     * Pivot data holder.
-     *
-     * @var \Illuminate\Support\Collection
+     * @var \Softworx\RocXolid\CMS\Elements\Models\Contracts\Elementable $parent Element structure parent reference.
+     */
+    protected $parent;
+
+    /**
+     * @var \Illuminate\Support\Collection $pivot_data Pivot data holder.
      */
     protected $pivot_data;
 
@@ -70,6 +77,13 @@ abstract class AbstractElement extends AbstractCrudModel implements Element
     /**
      * {@inheritDoc}
      */
+    protected $fillable = [
+        'meta_data',
+    ];
+
+    /**
+     * {@inheritDoc}
+     */
     protected $relationships = [
         'web',
     ];
@@ -77,22 +91,22 @@ abstract class AbstractElement extends AbstractCrudModel implements Element
     /**
      * {@inheritDoc}
      */
-    abstract public function getDocumentEditorComponentType(): string;
+    abstract public function getDocumentEditorElementType(): string;
 
     /**
      * {@inheritDoc}
      */
-    abstract public function getDocumentEditorComponentSnippetPreview(): string;
+    abstract public function getDocumentEditorElementSnippetPreview(): string;
 
     /**
      * {@inheritDoc}
      */
-    abstract public function getDocumentEditorComponentSnippetTitle(): string;
+    abstract public function getDocumentEditorElementSnippetTitle(): string;
 
     /**
      * {@inheritDoc}
      */
-    abstract public function getDocumentEditorComponentSnippetCategories(): Collection;
+    abstract public function getDocumentEditorElementSnippetCategories(): Collection;
 
     /**
      * {@inheritDoc}
@@ -102,25 +116,55 @@ abstract class AbstractElement extends AbstractCrudModel implements Element
     /**
      * {@inheritDoc}
      */
-    public function getMetaData(): ?string
+    public function getSettingsUrl(): ?string
     {
+        $user = auth('rocXolid')->user();
+
+        if ($this->exists && $this->getAvailableMetaData()->isNotEmpty() && $user->can('update', $this)) {
+            return $this->getControllerRoute('edit');
+        } elseif (!$this->exists && $this->getAvailableMetaData()->isNotEmpty() && $user->can('create', $this)) {
+            // return $this->getControllerRoute('create');
+        }
+
         return null;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function isEmptyContent(array $assignments = []): bool
+    public function setParent(Elementable $parent): Element
     {
-        return false;
+        $this->parent = $parent;
+
+        return $this;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function renderContent(array $assignments = []): string
+    public function getContainer(): Element
     {
-        return $this->getModelViewerComponent()->render($this->getPivotData()->get('template'), $assignments);
+        return $this->parent->getContainer();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function fillCustom(Collection $data): Crudable
+    {
+        $this->fillMetaData($data);
+
+        return parent::fillCustom($data);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setElementData(Collection $data): Element
+    {
+        $this->fillCustom($data);
+
+        return $this;
     }
 
     /**
@@ -129,7 +173,7 @@ abstract class AbstractElement extends AbstractCrudModel implements Element
      *
      * @param string $group
      */
-    public function setGroup(string $group)
+    public function setGroup(string $group): Element
     {
         $this->group = $group;
 
@@ -142,7 +186,7 @@ abstract class AbstractElement extends AbstractCrudModel implements Element
      *
      * @param string $template
      */
-    public function setTemplate(string $template)
+    public function setTemplate(string $template): Element
     {
         $this->setPivotData(collect([
             'template' => $template
@@ -238,9 +282,56 @@ abstract class AbstractElement extends AbstractCrudModel implements Element
     /**
      * {@inheritDoc}
      */
+    public function renderContent(array $assignments = []): string
+    {
+        if (!$this->isDisplayed($assignments)) {
+            return '';
+        }
+
+        $content = $this->getModelViewerComponent()->render($this->getPivotData()->get('template'), $assignments);
+
+        return $this->adjustRenderedContent($content, $assignments);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function isEmptyContent(array $assignments = []): bool
+    {
+        return blank(strip_tags($this->renderContent($assignments)));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public static function getAvailableTemplates(string $theme): Collection
     {
         return ThemeManager::getComponentTemplates($theme, (new static())->getModelViewerComponent());
+    }
+
+    /**
+     * Check if the element is to be displayed when being rendered.
+     *
+     * @param array $assignments
+     * @return boolean
+     */
+    protected function isDisplayed(array $assignments = [])
+    {
+        return !$this->getDependenciesDataProvider()->isReady() || $this->isDisplayedByMetaData();
+    }
+
+    /**
+     * Adjust the rendered content before final output.
+     *
+     * @param string $content
+     * @param array $assignments
+     * @return string
+     */
+    protected function adjustRenderedContent(string $content, array $assignments = []): string
+    {
+        return !$this->getDependenciesDataProvider()->isReady()
+            ? $content
+            : $this->adjustRenderedContentByMetaData($content, $assignments);
     }
 
     /**
@@ -249,7 +340,7 @@ abstract class AbstractElement extends AbstractCrudModel implements Element
      * @param string $image
      * @return string
      */
-    protected function getDocumentEditorComponentSnippetPreviewAssetPath(string $image): string
+    protected function getDocumentEditorElementSnippetPreviewAssetPath(string $image): string
     {
         return asset(sprintf('vendor/softworx/rocXolid-cms-elements/images/snippets/preview/%s.svg', $image));
     }
@@ -264,4 +355,24 @@ abstract class AbstractElement extends AbstractCrudModel implements Element
     {
         return Str::plural(Str::snake((new \ReflectionClass($this))->getShortName()));
     }
+
+    /**
+     * Obtain model specific (fallbacks to 'default') configuration.
+     *
+     * @param string $key
+     * @return \Illuminate\Support\Collection
+     */
+    protected static function getConfigData(string $key): Collection
+    {
+        $config = static::getConfigFilePathKey();
+
+        return collect(config(sprintf('%s.%s.%s', $config, $key, static::class), config(sprintf('%s.%s.default', $config, $key), [])));
+    }
+
+    /**
+     * Obtain config file path key.
+     *
+     * @return string
+     */
+    abstract protected static function getConfigFilePathKey(): string;
 }

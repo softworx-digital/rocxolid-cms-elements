@@ -42,6 +42,7 @@ trait HasElements
             ->map(function ($pivot) {
                 return ElementBuilder::buildElement(
                     $pivot,
+                    $this,
                     $this->getDependenciesProvider(),
                     $this->getMutatorsProvider(),
                     $this->getDependenciesDataProvider()

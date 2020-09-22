@@ -2,11 +2,12 @@
 
 namespace Softworx\RocXolid\CMS\Elements\Models;
 
-use Faker;
 // rocXolid common traits
 use Softworx\RocXolid\Common\Models\Traits as CommonTraits;
-// rocXolid cms models
+// rocXolid cms elements models
 use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractComponentElement;
+// rocXolid cms elements model contracts
+use Softworx\RocXolid\CMS\Elements\Models\Contracts\DisplayRulesProvider;
 
 /**
  * Text page element - most basic element.
@@ -15,9 +16,9 @@ use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractComponentElement;
  * @package Softworx\RocXolid\CMS\Elements
  * @version 1.0.0
  */
-class Text extends AbstractComponentElement
+class Text extends AbstractComponentElement implements DisplayRulesProvider
 {
-    use Traits\HasCachedContent;
+    use Traits\HasDisplayRules;
     use CommonTraits\HasImage;
     use CommonTraits\HasFile;
 
@@ -28,6 +29,7 @@ class Text extends AbstractComponentElement
         'name',
         'bookmark',
         'content',
+        'meta_data',
     ];
 
     // @todo: put this into config to be project specific (and this declaration taken as default)
@@ -44,9 +46,9 @@ class Text extends AbstractComponentElement
     /**
      * {@inheritDoc}
      */
-    public function getDocumentEditorComponentSnippetPreview(): string
+    public function getDocumentEditorElementSnippetPreview(): string
     {
-        return $this->getDocumentEditorComponentSnippetPreviewAssetPath('text');
+        return $this->getDocumentEditorElementSnippetPreviewAssetPath('text');
     }
 
     /**
@@ -54,22 +56,6 @@ class Text extends AbstractComponentElement
      */
     public function getDefaultContent(?string $part = null): string
     {
-        return Faker\Factory::create('en_US')->realText();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function isEmptyContent(array $assignments = []): bool
-    {
-        return $this->isEmptyCompiledContent($assignments);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function renderContent(array $assignments = []): string
-    {
-        return $this->getCompiledContent($assignments);
+        return \Faker\Factory::create('en_US')->realText();
     }
 }

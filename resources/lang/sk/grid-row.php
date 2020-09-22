@@ -6,6 +6,9 @@ return [
     ],
     'field' => [
         'name' => 'Názov',
+        'meta_data' => [
+            'text_numbering' => 'Číslovanie vnorených textových blokov',
+        ],
     ],
     'model' => [
         'title' => [

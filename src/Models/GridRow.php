@@ -2,7 +2,9 @@
 
 namespace Softworx\RocXolid\CMS\Elements\Models;
 
-// rocXolid cms models
+// rocXolid cms elements model contracts
+use Softworx\RocXolid\CMS\Elements\Models\Contracts\Element;
+// rocXolid cms elements models
 use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractContainerElement;
 
 /**
@@ -25,15 +27,23 @@ class GridRow extends AbstractContainerElement
     /**
      * {@inheritDoc}
      */
-    public function getDocumentEditorComponentSnippetPreview(): string
+    public function getContainer(): Element
     {
-        return $this->getDocumentEditorComponentSnippetPreviewAssetPath(sprintf('grid-1x%s', $this->elements()->count()));
+        return $this;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getDocumentEditorComponentSnippetTitle(): string
+    public function getDocumentEditorElementSnippetPreview(): string
+    {
+        return $this->getDocumentEditorElementSnippetPreviewAssetPath(sprintf('grid-1x%s', $this->elements()->count()));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getDocumentEditorElementSnippetTitle(): string
     {
         if ($this->elements()->isEmpty()) {
             return $this->getModelViewerComponent()->translate('model.title.singular');
@@ -71,15 +81,15 @@ class GridRow extends AbstractContainerElement
         for ($i = 0; $i < $count; $i++) {
             $column = app(GridColumn::class)
                 ->setDependenciesProvider($this->getDependenciesProvider())
-                ->fill([
-                    'grid_layout' => json_encode([
+                ->fillGridLayout(collect([
+                    'gridLayout' => [
                         'xs' => (int)(12 / $count),
                         'sm' => (int)(12 / $count),
                         'md' => (int)(12 / $count),
                         'lg' => (int)(12 / $count),
                         'xl' => (int)(12 / $count),
-                    ])
-                ]);
+                    ]
+                ]));
 
             $this->elements()->push($column);
         }

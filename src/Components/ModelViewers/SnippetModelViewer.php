@@ -36,10 +36,10 @@ class SnippetModelViewer extends CrudModelViewer implements HigherOrderComponent
         $model = $this->getModel();
 
         return collect([
-            'data-type' => $model->getDocumentEditorComponentType(),
-            'data-preview' => $model->getDocumentEditorComponentSnippetPreview(),
-            'data-keditor-title' => $model->getDocumentEditorComponentSnippetTitle(),
-            'data-keditor-categories' => $model->getDocumentEditorComponentSnippetCategories()->join(';'),
+            'data-type' => $model->getDocumentEditorElementType(),
+            'data-preview' => $model->getDocumentEditorElementSnippetPreview(),
+            'data-keditor-title' => $model->getDocumentEditorElementSnippetTitle(),
+            'data-keditor-categories' => $model->getDocumentEditorElementSnippetCategories()->join(';'),
         ])->filter()->map(function ($value, $attribute) {
             return sprintf('%s="%s"', $attribute, $value);
         })->join(' ');

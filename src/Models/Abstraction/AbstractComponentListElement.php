@@ -21,7 +21,7 @@ abstract class AbstractComponentListElement extends AbstractComponentElement imp
     /**
      * {@inheritDoc}
      */
-    public function getDocumentEditorComponentType(): string
+    public function getDocumentEditorElementType(): string
     {
         return sprintf('component-%s', $this->getElementTypeParam());
     }
@@ -29,15 +29,15 @@ abstract class AbstractComponentListElement extends AbstractComponentElement imp
     /**
      * {@inheritDoc}
      */
-    public function getDocumentEditorComponentSnippetPreview(): string
+    public function getDocumentEditorElementSnippetPreview(): string
     {
-        return $this->getDocumentEditorComponentSnippetPreviewAssetPath('list');
+        return $this->getDocumentEditorElementSnippetPreviewAssetPath('list');
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getDocumentEditorComponentSnippetTitle(): string
+    public function getDocumentEditorElementSnippetTitle(): string
     {
         return $this->getModelViewerComponent()->translate(sprintf('model.title.%s', $this->getTemplate()));
     }
@@ -45,7 +45,7 @@ abstract class AbstractComponentListElement extends AbstractComponentElement imp
     /**
      * {@inheritDoc}
      */
-    public function getDocumentEditorComponentSnippetCategories(): Collection
+    public function getDocumentEditorElementSnippetCategories(): Collection
     {
         return collect($this->getModelViewerComponent()->translations('elementable.categories'));
     }

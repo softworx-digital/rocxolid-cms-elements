@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Relations\MorphPivot;
 // rocXolid cms contracts
 use Softworx\RocXolid\CMS\ElementableDependencies\Contracts\ElementableDependencyDataProvider;
 use Softworx\RocXolid\CMS\Models\Contracts\ElementsDependenciesProvider;
+use Softworx\RocXolid\CMS\Models\Contracts\ElementsMutatorsProvider;
 // rocXolid cms elements contracts
 use Softworx\RocXolid\CMS\Elements\Models\Contracts\Element;
-use Softworx\RocXolid\CMS\Models\Contracts\ElementsMutatorsProvider;
+use Softworx\RocXolid\CMS\Elements\Models\Contracts\Elementable;
 
 /**
  * Elements builder (factory).
@@ -24,6 +25,7 @@ class ElementBuilder
      * Build element with provided pivot.
      *
      * @param \Illuminate\Database\Eloquent\Relations\MorphPivot $pivot
+     * @param \Softworx\RocXolid\CMS\Elements\Models\Contracts\Elementable $parent
      * @param \Softworx\RocXolid\CMS\Models\Contracts\ElementsDependenciesProvider $depencies_provider
      * @param \Softworx\RocXolid\CMS\Models\Contracts\ElementsMutatorsProvider $mutators_provider
      * @param \Softworx\RocXolid\CMS\ElementableDependencies\Contracts\ElementableDependencyDataProvider $depencies_provider
@@ -31,6 +33,7 @@ class ElementBuilder
      */
     public static function buildElement(
         MorphPivot $pivot,
+        Elementable $parent,
         ElementsDependenciesProvider $depencies_provider,
         ElementsMutatorsProvider $mutators_provider,
         ElementableDependencyDataProvider $depencies_data_provider
@@ -38,6 +41,7 @@ class ElementBuilder
         $element = $pivot->element;
 
         $element
+            ->setParent($parent)
             ->setDependenciesProvider($depencies_provider) // propagate dependencies provider
             ->setMutatorsProvider($mutators_provider) // propagate mutators provider
             ->setDependenciesDataProvider($depencies_data_provider) // propagate dependencies data provider

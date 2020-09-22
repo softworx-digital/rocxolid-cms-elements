@@ -36,11 +36,12 @@ class ElementViewer extends CrudModelViewer implements Themeable
     public function getElementDataAttributes(): string
     {
         return collect([
-            'data-type' => $this->getModel()->getDocumentEditorComponentType(),
+            'data-type' => $this->getModel()->getDocumentEditorElementType(),
             'data-element-type' => $this->getModel()->getElementTypeParam(),
             'data-element-id' => $this->getModel()->getKey(),
             'data-element-template' => $this->getModel()->getTemplate(),
             'data-element-meta' => $this->getModel()->getMetaData(),
+            'data-element-settings-url' => $this->getModel()->getSettingsUrl(),
         ])->filter()->map(function ($value, $attribute) {
             return sprintf('%s="%s"', $attribute, htmlspecialchars($value, ENT_QUOTES, 'UTF-8'));
         })->join(' ');

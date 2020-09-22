@@ -3,25 +3,30 @@
 namespace Softworx\RocXolid\CMS\Elements\Models\Abstraction;
 
 use Illuminate\Support\Collection;
-// rocXolid model contracts
-use Softworx\RocXolid\Models\Contracts\Crudable;
+// rocXolid cms elements model contracts
+use Softworx\RocXolid\CMS\Elements\Models\Contracts\Element;
+use Softworx\RocXolid\CMS\Elements\Models\Contracts\ComponentElement;
 // rocXolid cms elements models
 use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractElement;
+// rocXolid cms elements model traits
+use Softworx\RocXolid\CMS\Elements\Models\Traits as Traits;
 
 /**
  * Abstraction for component element models.
- * Components cannot have any containees.
+ * Components cannot have any containees and do have a content.
  *
  * @author softworx <hello@softworx.digital>
  * @package Softworx\RocXolid\CMS\Elements
  * @version 1.0.0
  */
-abstract class AbstractComponentElement extends AbstractElement
+abstract class AbstractComponentElement extends AbstractElement implements ComponentElement
 {
+    use Traits\HasContent;
+
     /**
      * {@inheritDoc}
      */
-    public function getDocumentEditorComponentType(): string
+    public function getDocumentEditorElementType(): string
     {
         return sprintf('component-%s', $this->getElementTypeParam());
     }
@@ -29,7 +34,17 @@ abstract class AbstractComponentElement extends AbstractElement
     /**
      * {@inheritDoc}
      */
-    public function getDocumentEditorComponentSnippetTitle(): string
+    public function setElementData(Collection $data): Element
+    {
+        $this->fillContent($data);
+
+        return parent::setElementData($data);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getDocumentEditorElementSnippetTitle(): string
     {
         return $this->getModelViewerComponent()->translate(sprintf('model.title.%s', $this->getTemplate()));
     }
@@ -37,7 +52,7 @@ abstract class AbstractComponentElement extends AbstractElement
     /**
      * {@inheritDoc}
      */
-    public function getDocumentEditorComponentSnippetCategories(): Collection
+    public function getDocumentEditorElementSnippetCategories(): Collection
     {
         return collect($this->getModelViewerComponent()->translations('elementable.categories'));
     }
@@ -61,84 +76,8 @@ abstract class AbstractComponentElement extends AbstractElement
     /**
      * {@inheritDoc}
      */
-    public function onCreateBeforeSave(Collection $data): Crudable
+    protected static function getConfigFilePathKey(): string
     {
-        if ($data->has('content') && is_array($data->get('content'))) {
-            // $content = collect($data->get('content'));
-            // $data->put('content', ($content->count() > 1) ? $content->toJson() : $content->first());
-            $data->put('content', collect($data->get('content'))->toJson());
-        }
-
-        $this->fill($data->toArray());
-
-        return $this;
-    }
-
-    /**
-     * Retrieve the content (part).
-     *
-     * @param string|null $part
-     * @return string
-     */
-    public function getContent($part = null): string
-    {
-        $content = json_decode($this->content);
-
-        if (json_last_error() == JSON_ERROR_NONE) {
-            $content = collect($content)->get($part, null);
-        } else {
-            $content = $this->content;
-        }
-
-        return $content ?? '';
-    }
-
-    /**
-     * Check if content (part) is set to element.
-     *
-     * @param string|null $part
-     * @return bool
-     * @throws \RuntimeException
-     */
-    public function isSetContent(?string $part = null): bool
-    {
-        if (!isset($this->content)) {
-            return false;
-        }
-
-        $content = json_decode($this->content);
-
-        if (json_last_error() == JSON_ERROR_NONE) {
-            return collect($content)->has($part);
-        }
-
-        // the content is not JSON structured and we want it this way
-        if (is_null($part)) {
-            return true;
-        }
-
-        // accessing the content as JSON structure, but the content is unstructured
-        throw new \RuntimeException(sprintf('Part [%s] is inaccessible, content of [%s][%s] is unstructured', $part, get_class($this), $this->getKey()));
-    }
-
-    /**
-     * Decide whether to use default value for content (part).
-     *
-     * @param string|null $part
-     * @return boolean
-     */
-    public function useDefaultContent(?string $part = null): bool
-    {
-        return !$this->getDependenciesDataProvider()->isReady();
-    }
-
-    /**
-     * Obtain default element content.
-     *
-     * @return string
-     */
-    public function getDefaultContent(?string $part = null): string
-    {
-        return '(blank)';
+        return 'rocXolid.cms-elements.component';
     }
 }

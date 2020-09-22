@@ -6,6 +6,9 @@ return [
     ],
     'field' => [
         'name' => 'Názov',
+        'meta_data' => [
+            'display_rules' => 'Podmienky zobrazenia',
+        ],
     ],
     'model' => [
         'title' => [
@@ -19,5 +22,8 @@ return [
             'Komponent',
             'Textový komponent',
         ],
+    ],
+    'placeholder' => [
+        'none' => 'Žiadne',
     ],
 ];
