@@ -19,8 +19,8 @@ use Softworx\RocXolid\CMS\Elements\Models\Contracts\DisplayRulesProvider;
 class Text extends AbstractComponentElement implements DisplayRulesProvider
 {
     use Traits\HasDisplayRules;
-    use CommonTraits\HasImage;
-    use CommonTraits\HasFile;
+    // use CommonTraits\HasImage;
+    // use CommonTraits\HasFile;
 
     /**
      * {@inheritDoc}

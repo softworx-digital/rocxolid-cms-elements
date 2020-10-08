@@ -44,7 +44,7 @@ interface Elementable extends Crudable
     public function savePivot(Element $element): Elementable;
 
     /**
-     * Intermediate relation to enable two-side polymorphism for elementable's and elements.
+     * Intermediate relation to enable two-side polymorphism for elementables and elements.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOneOrMany
      */
