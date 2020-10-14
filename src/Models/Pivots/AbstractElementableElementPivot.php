@@ -4,6 +4,7 @@ namespace Softworx\RocXolid\CMS\Elements\Models\Pivots;
 
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\MorphPivot;
 // rocXolid cms elements model contracts
 use Softworx\RocXolid\CMS\Elements\Models\Contracts\Elementable;
@@ -47,9 +48,9 @@ abstract class AbstractElementableElementPivot extends MorphPivot
     /**
      * Element connection.
      *
-     * @return Illuminate\Database\Eloquent\Relations\MorphTo
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function element()
+    public function element(): MorphTo
     {
         return $this->morphTo();
     }
