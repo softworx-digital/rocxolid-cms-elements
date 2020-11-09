@@ -318,7 +318,7 @@ ENTITIES;
         }
 
         $this->dependencies_provider
-            ->provideDependencies()
+            ->provideDependencies(true)
             ->each(function ($dependency) use ($assignments) {
                 $dependency->addAssignment($assignments, $this->dependencies_data_provider);
             });
