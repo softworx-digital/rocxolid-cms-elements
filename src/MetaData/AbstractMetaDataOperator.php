@@ -41,9 +41,6 @@ abstract class AbstractMetaDataOperator implements MetaDataOperator
      */
     public function __construct(Element $element)
     {
-logger(__METHOD__);
-logger(get_class($element));
-logger($element);
         $this->element = $element;
     }
 

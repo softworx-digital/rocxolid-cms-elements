@@ -15,6 +15,7 @@ use Softworx\RocXolid\CMS\Elements\Models\Contracts\Element;
  * @author softworx <hello@softworx.digital>
  * @package Softworx\RocXolid\CMS\Elements
  * @version 1.0.0
+ * @todo: optimize
  */
 class ContentCompiler
 {
@@ -259,6 +260,8 @@ class ContentCompiler
 <!ENTITY diams "&#9830;">
 ENTITIES;
 
+    private static $instance;
+
     /**
      * Dependencies provider reference.
      *
@@ -281,6 +284,13 @@ ENTITIES;
     private $mutators_provider;
 
     /**
+     * Dependencies assignments container.
+     *
+     * @var \Illuminate\Support\Collection
+     */
+    private $dependencies_assignments;
+
+    /**
      * Constructor.
      *
      * @param \Softworx\RocXolid\CMS\Elements\Models\Contracts\Element $element
@@ -290,6 +300,13 @@ ENTITIES;
         $this->dependencies_provider = $element->getDependenciesProvider();
         $this->dependencies_data_provider = $element->getDependenciesDataProvider();
         $this->mutators_provider = $element->getMutatorsProvider();
+        $this->dependencies_assignments = collect();
+
+        $this->dependencies_provider
+            ->provideDependencies()
+            ->each(function ($dependency) {
+                $dependency->addAssignment($this->dependencies_assignments, $this->dependencies_data_provider);
+            });
     }
 
     /**
@@ -300,7 +317,11 @@ ENTITIES;
      */
     public static function init(Element $element): ContentCompiler
     {
-        return new static($element);
+        if (!self::$instance) {
+            self::$instance = new static($element);
+        }
+
+        return self::$instance;
     }
 
     /**
@@ -317,15 +338,9 @@ ENTITIES;
             return $content;
         }
 
-        $this->dependencies_provider
-            ->provideDependencies(true)
-            ->each(function ($dependency) use ($assignments) {
-                $dependency->addAssignment($assignments, $this->dependencies_data_provider);
-            });
+        $assignments = $this->dependencies_assignments->merge($assignments);
 
-        $content = $this->compileContent($content, $assignments->all());
-
-        return $content;
+        return $this->compileContent($content, $assignments->all());
     }
 
     /**
