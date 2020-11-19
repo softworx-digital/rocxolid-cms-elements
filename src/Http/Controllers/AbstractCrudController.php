@@ -8,7 +8,7 @@ use Softworx\RocXolid\Http\Controllers\AbstractCrudController as RocXolidAbstrac
 use Softworx\RocXolid\Admin\Components\Dashboard\Crud as CrudDashboard;
 
 /**
- * CMS Elements CRUD controller.
+ * rocXolid CMS Elements CRUD controller.
  *
  * @author softworx <hello@softworx.digital>
  * @package Softworx\RocXolid\CMS\Elements
