@@ -375,7 +375,7 @@ ENTITIES;
         }
 
         $content = $doc->saveHTML($doc->documentElement);
-        $content = str_replace([ '<body>', '</body>' ] , '', $content);
+        $content = str_replace([ '<body>', '</body>' ], '', $content);
         $content = htmlspecialchars_decode($content);
 
         return $content;
@@ -432,7 +432,6 @@ ENTITIES;
         $dependency_statement_value = RenderingService::render($dependency_statement, $assignments);
 
         if (blank($dependency_statement_value) && $span->hasAttribute('data-dependency-on-empty')) {
-
             $dependency_on_empty_handler = sprintf('onEmptyDependency%s', Str::studly($span->getAttribute('data-dependency-on-empty')));
 
             if (!method_exists($this, $dependency_on_empty_handler)) {

@@ -10,5 +10,4 @@ use Softworx\RocXolid\CMS\Elements\Models\Forms\AbstractElement\AbstractCreate;
  */
 class Create extends AbstractCreate
 {
-
 }

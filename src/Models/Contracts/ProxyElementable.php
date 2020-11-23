@@ -17,5 +17,4 @@ use Softworx\RocXolid\CMS\Elements\Models\Contracts\Elementable;
  */
 interface ProxyElementable extends Elementable, Modellable
 {
-
 }

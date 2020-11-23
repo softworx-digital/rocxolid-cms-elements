@@ -14,5 +14,4 @@ use Softworx\RocXolid\CMS\Elements\Http\Controllers\AbstractContainerElementCont
  */
 class Controller extends AbstractContainerElementController
 {
-
 }

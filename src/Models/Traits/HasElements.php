@@ -115,8 +115,8 @@ trait HasElements
     {
         $type = $this->elementsPivots()->getRelated();
 
-        return $type::where($type->getPrimaryKeyWhereCondition($this, $element))->firstOr(function() use ($element, $type) {
-            $elementable = $this->elements()->filter(function($element) {
+        return $type::where($type->getPrimaryKeyWhereCondition($this, $element))->firstOr(function () use ($element, $type) {
+            $elementable = $this->elements()->filter(function ($element) {
                 return $element instanceof Elementable;
             });
 

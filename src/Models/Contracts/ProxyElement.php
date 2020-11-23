@@ -17,5 +17,4 @@ use Softworx\RocXolid\CMS\Elements\Models\Contracts\Element;
  */
 interface ProxyElement extends Element, Modellable
 {
-
 }

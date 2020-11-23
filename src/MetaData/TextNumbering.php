@@ -76,7 +76,7 @@ class TextNumbering extends AbstractMetaDataOperator
                 $numbering = new \DOMElement('span', sprintf('%s.%s ', $this->getValue(), $this->counter));
                 $inserted = false;
 
-                collect($div->childNodes)->each(function(\DOMNode $node) use ($numbering, &$inserted) {
+                collect($div->childNodes)->each(function (\DOMNode $node) use ($numbering, &$inserted) {
                     if (collect(self::BLOCK_ELEMENTS)->contains($node->nodeName)) {
                         $node->insertBefore($numbering, $node->firstChild);
                         $inserted = true;
@@ -90,7 +90,7 @@ class TextNumbering extends AbstractMetaDataOperator
         });
 
         $content = $doc->saveHTML($doc->documentElement);
-        $content = str_replace([ '<body>', '</body>' ] , '', $content);
+        $content = str_replace([ '<body>', '</body>' ], '', $content);
         $content = htmlspecialchars_decode($content);
 
         $this->counter++;

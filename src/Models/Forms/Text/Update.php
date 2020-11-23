@@ -10,5 +10,4 @@ use Softworx\RocXolid\CMS\Elements\Models\Forms\AbstractElement\AbstractUpdate;
  */
 class Update extends AbstractUpdate
 {
-
 }
