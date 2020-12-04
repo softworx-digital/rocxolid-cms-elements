@@ -37,6 +37,7 @@ use Softworx\RocXolid\CMS\Elements\Components\ModelViewers\SnippetModelViewer;
  * @author softworx <hello@softworx.digital>
  * @package Softworx\RocXolid\CMS\Elements
  * @version 1.0.0
+ * @todo: use \Softworx\RocXolid\Models\Traits\Utils\Configurable trait
  */
 abstract class AbstractElement extends AbstractCrudModel implements Element
 {
