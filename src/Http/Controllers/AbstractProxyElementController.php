@@ -13,10 +13,10 @@ use Softworx\RocXolid\CMS\Models\PageProxy;
 // rocXolid cms elements controllers
 use Softworx\RocXolid\CMS\Elements\Http\Controllers\AbstractElementController;
 
-// @todo - cele refactornut - vzhladom na pagelementable a pageelementy, ktore mozu mat v sebe elementy (containery)
+// @todo cele refactornut - vzhladom na pagelementable a pageelementy, ktore mozu mat v sebe elementy (containery)
 abstract class AbstractProxyElementController extends AbstractElementController
 {
-    // @todo - zrejme posielat aj classu + test na interface po find instancie a neifovat to - skarede
+    // @todo zrejme posielat aj classu + test na interface po find instancie a neifovat to - skarede
     public function getPageElementable(FormRequest $request): Elementable
     {
         if (!$request->has(FormField::SINGLE_DATA_PARAM)) {

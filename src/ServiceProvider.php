@@ -106,7 +106,7 @@ class ServiceProvider extends RocXolidAbstractServiceProvider
      */
     private function bindContracts(): RocXolidAbstractServiceProvider
     {
-        // @todo: this doesn't work and setting this for each model viewer isn't the right way
+        // @todo this doesn't work and setting this for each model viewer isn't the right way
         // $this->app->when(\Softworx\RocXolid\CMS\Rendering\Contracts\Themeable::class)
         $this->app->when([
                 ModelViewers\GridRowElementViewer::class,

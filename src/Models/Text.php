@@ -32,7 +32,7 @@ class Text extends AbstractComponentElement implements DisplayRulesProvider
         'meta_data',
     ];
 
-    // @todo: put this into config to be project specific (and this declaration taken as default)
+    // @todo put this into config to be project specific (and this declaration taken as default)
     protected $image_sizes = [
         'image' => [
             'icon' => [ 'width' => 70, 'height' => 70, 'method' => 'fit', 'constraints' => [ 'upsize', ], ],

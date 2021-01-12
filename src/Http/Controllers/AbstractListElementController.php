@@ -91,7 +91,7 @@ abstract class AbstractListElementController extends AbstractElementController
         );
 
         if ($form->isValid()) {
-            // @todo - quick hack na handlovanie radio + checkbox
+            // @todo quick hack na handlovanie radio + checkbox
             $values = $form->getFormField('containee_id')->getValue();
 
             if (!is_array($values)) {

@@ -13,7 +13,7 @@ use Softworx\RocXolid\CMS\Elements\Models\Contracts\Element;
  * @author softworx <hello@softworx.digital>
  * @package Softworx\RocXolid\CMS\Elements
  * @version 1.0.0
- * @todo: define
+ * @todo define
  */
 interface ContainerElement extends Element, Elementable
 {

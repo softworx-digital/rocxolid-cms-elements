@@ -87,7 +87,7 @@ trait HasMetaData
 
         if ($meta_data->isNotEmpty()) {
             // encoding to base64 because of problems with JSON in HTML data-* attributes
-            // @todo: ugly
+            // @todo ugly
             return base64_encode($meta_data->mapWithKeys(function (MetaDataOperator $meta_data_operator) {
                 if (class_exists($meta_data_operator->getValue())) {
                     $value = app($meta_data_operator->getValue())->getTranslatedTitle($this->getCrudController());

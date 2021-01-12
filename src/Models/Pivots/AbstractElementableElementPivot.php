@@ -16,7 +16,7 @@ use Softworx\RocXolid\CMS\Elements\Models\Contracts\Element;
  * @author softworx <hello@softworx.digital>
  * @package Softworx\RocXolid\CMS\Elements
  * @version 1.0.0
- * @todo: this is actually not a MorphPivot, since the MorphManyThrough is not supported
+ * @todo this is actually not a MorphPivot, since the MorphManyThrough is not supported
  */
 abstract class AbstractElementableElementPivot extends MorphPivot
 {

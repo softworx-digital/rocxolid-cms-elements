@@ -15,7 +15,7 @@ use Softworx\RocXolid\CMS\Elements\Models\Contracts\Element;
  * @author softworx <hello@softworx.digital>
  * @package Softworx\RocXolid\CMS\Elements
  * @version 1.0.0
- * @todo: optimize
+ * @todo optimize
  */
 class ContentCompiler
 {
@@ -463,7 +463,7 @@ ENTITIES;
     {
         $dependency_statement = $span->getAttribute('data-dependency');
 
-        // @todo: hardcoded exceptions
+        // @todo hardcoded exceptions
         if (collect([ '{PAGENO}', '{nb}' ])->contains($dependency_statement)) {
             return $dependency_statement;
         }

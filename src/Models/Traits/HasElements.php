@@ -29,8 +29,8 @@ trait HasElements
 
     /**
      * {@inheritDoc}
-     * @todo: make this somewhat seamless for in-memory (elementsBag) / persisted elements
-     * @todo: optimize
+     * @todo make this somewhat seamless for in-memory (elementsBag) / persisted elements
+     * @todo optimize
      */
     public function elements(): Collection
     {
