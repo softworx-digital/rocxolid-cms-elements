@@ -20,7 +20,7 @@ use Softworx\RocXolid\CMS\Elements\MetaData\DisplayRules\Contracts\DisplayRule;
  * Abstract elementable dependency.
  *
  * @author softworx <hello@softworx.digital>
- * @package Softworx\RocXolid\CMS
+ * @package Softworx\RocXolid\CMS\Elements
  * @version 1.0.0
  */
 abstract class AbstractDisplayRule implements DisplayRule, Controllable, TranslationDiscoveryProvider, TranslationProvider

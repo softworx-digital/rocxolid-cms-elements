@@ -6,12 +6,11 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
 // rocXolid traits
-use Softworx\RocXolid\Traits\Paramable;
-use Softworx\RocXolid\Traits\MethodOptionable;
+use Softworx\RocXolid\Traits as rxTraits;
 // rocXolid models
 use Softworx\RocXolid\Models\AbstractCrudModel;
 // rocXolid model traits
-use Softworx\RocXolid\Models\Traits\Cloneable;
+use Softworx\RocXolid\Models\Traits as ModelTraits;
 // rocXolid model contracts
 use Softworx\RocXolid\Models\Contracts\Crudable;
 // rocXolid model viewer components
@@ -42,9 +41,9 @@ use Softworx\RocXolid\CMS\Elements\Components\ModelViewers\SnippetModelViewer;
 abstract class AbstractElement extends AbstractCrudModel implements Element
 {
     use SoftDeletes;
-    use Paramable;
-    use MethodOptionable;
-    use Cloneable;
+    use rxTraits\Paramable;
+    use rxTraits\MethodOptionable;
+    use ModelTraits\CanBeCloned;
     use CommonTraits\HasWeb;
     //use CommonTraits\UserGroupAssociatedWeb;
     use CMSTraits\HasFrontpageUrlAttribute;
