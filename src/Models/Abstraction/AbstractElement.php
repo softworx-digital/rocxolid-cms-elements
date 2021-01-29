@@ -313,7 +313,7 @@ abstract class AbstractElement extends AbstractCrudModel implements Element
      * Check if the element is to be displayed when being rendered.
      *
      * @param array $assignments
-     * @return boolean
+     * @return bool
      */
     protected function isDisplayed(array $assignments = [])
     {
