@@ -39,7 +39,7 @@ abstract class AbstractComponentProxyElement extends AbstractComponentElement im
      */
     public function onCreateBeforeSave(Collection $data): Crudable
     {
-        dd('@todo', __METHOD__);
+        dd(__METHOD__, '@todo');
         if ($data->has('_page_proxy_id')) {
             $page_elementable = PageProxy::findOrFail($data->get('_page_proxy_id'));
         }
