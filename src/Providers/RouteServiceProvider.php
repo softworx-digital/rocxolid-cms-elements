@@ -45,6 +45,7 @@ class RouteServiceProvider extends IlluminateServiceProvider
             'prefix' => sprintf('%s/cms/elements', config('rocXolid.admin.general.routes.root', 'rocXolid')),
             'as' => 'rocXolid.cms.elements.',
         ], function ($router) {
+            // ElementRouterService::create('section', \Section\Controller::class);
             ElementRouterService::create('grid-row', \GridRow\Controller::class);
             ElementRouterService::create('text', \Text\Controller::class);
         });
@@ -60,6 +61,7 @@ class RouteServiceProvider extends IlluminateServiceProvider
      */
     private function mapRouteModels(Router $router): IlluminateServiceProvider
     {
+        // $router->model('section', \Softworx\RocXolid\CMS\Elements\Models\Section::class);
         $router->model('grid_row', \Softworx\RocXolid\CMS\Elements\Models\GridRow::class);
         $router->model('text', \Softworx\RocXolid\CMS\Elements\Models\Text::class);
 

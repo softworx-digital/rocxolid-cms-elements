@@ -118,12 +118,12 @@ abstract class AbstractElement extends AbstractCrudModel implements Element
      */
     public function getSettingsUrl(): ?string
     {
-        $user = auth('rocXolid')->user();
-
-        if ($this->exists && $this->getAvailableMetaData()->isNotEmpty() && $user->can('update', $this)) {
-            return $this->getControllerRoute('edit');
-        } elseif (!$this->exists && $this->getAvailableMetaData()->isNotEmpty() && $user->can('create', $this)) {
-            // return $this->getControllerRoute('create');
+        if ($user = auth('rocXolid')->user()) {
+            if ($this->exists && $this->getAvailableMetaData()->isNotEmpty() && $user->can('update', $this)) {
+                return $this->getControllerRoute('edit');
+            } elseif (!$this->exists && $this->getAvailableMetaData()->isNotEmpty() && $user->can('create', $this)) {
+                // return $this->getControllerRoute('create');
+            }
         }
 
         return null;
