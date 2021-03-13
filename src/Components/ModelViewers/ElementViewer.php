@@ -56,4 +56,14 @@ class ElementViewer extends CrudModelViewer implements Themeable
     {
         return $this->getModel()->getElementTypeParam();
     }
+
+    /**
+     * Check if assigned model in presentation mode.
+     *
+     * @return boolean
+     */
+    public function isPresenting(): bool
+    {
+        return $this->getModel()->isPresenting();
+    }
 }

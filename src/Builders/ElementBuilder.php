@@ -42,6 +42,7 @@ class ElementBuilder
 
         $element
             ->setParent($parent)
+            ->setPresenting($parent->isPresenting())
             ->setDependenciesProvider($depencies_provider) // propagate dependencies provider
             ->setMutatorsProvider($mutators_provider) // propagate mutators provider
             ->setDependenciesDataProvider($depencies_data_provider) // propagate dependencies data provider

@@ -51,6 +51,7 @@ abstract class AbstractElement extends AbstractCrudModel implements Element
     use CMSTraits\HasElementsMutatorsProvider;
     use CMSTraits\HasElementableDependencyDataProvider;
     use Traits\HasMetaData;
+    use Traits\ProvidesPresentationMode;
 
     /**
      * @var string $snippet_model_viewer_type Model viewer type used for snippet rendering.

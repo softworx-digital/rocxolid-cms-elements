@@ -14,8 +14,7 @@ use Softworx\RocXolid\CMS\Models\Contracts\ElementsMutatorsProviderable;
 // rocXolid cms elements model viewer components
 use Softworx\RocXolid\CMS\Elements\Components\ModelViewers\SnippetModelViewer;
 // rocXolid cms elements model contracts
-use Softworx\RocXolid\CMS\Elements\Models\Contracts\Elementable;
-use Softworx\RocXolid\CMS\Elements\Models\Contracts\MetaDataProvider;
+use Softworx\RocXolid\CMS\Elements\Models\Contracts;
 
 /**
  * Interface for model to be used as element for an elementable.
@@ -25,7 +24,8 @@ use Softworx\RocXolid\CMS\Elements\Models\Contracts\MetaDataProvider;
  * @version 1.0.0
  */
 interface Element extends
-    MetaDataProvider,
+    Contracts\MetaDataProvider,
+    Contracts\PresentationModeProvider,
     ElementsDependenciesProviderable,
     ElementsMutatorsProviderable,
     Paramable,
@@ -74,7 +74,7 @@ interface Element extends
      * @param \Softworx\RocXolid\CMS\Elements\Models\Contracts\Elementable $parent
      * @return \Softworx\RocXolid\CMS\Elements\Models\Contracts\Element
      */
-    public function setParent(Elementable $parent): Element;
+    public function setParent(Contracts\Elementable $parent): Element;
 
     /**
      * Get topmost container element.
