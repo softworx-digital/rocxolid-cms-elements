@@ -15,6 +15,7 @@ return [
             'singular' => 'Textový blok',
             'plural' => 'Textový blok',
             'default' => 'Textový blok',
+            'page-title' => 'Titulka stránky',
         ],
     ],
     'elementable' => [

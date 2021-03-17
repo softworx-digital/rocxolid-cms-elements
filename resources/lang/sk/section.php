@@ -18,6 +18,7 @@ return [
             'header' => 'Sekcia - hlavička',
             'soft' => 'Sekcia - jemné pozadie',
             'inverted' => 'Sekcia - tmavé pozadie',
+            'image' => 'Sekcia - obrázok',
         ],
     ],
     'elementable' => [
