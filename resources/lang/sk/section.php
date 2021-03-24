@@ -19,6 +19,7 @@ return [
             'soft' => 'Sekcia - jemné pozadie',
             'inverted' => 'Sekcia - tmavé pozadie',
             'image' => 'Sekcia - obrázok',
+            'estate-image' => 'Sekcia - obrázok nehnuteľnosť',
         ],
     ],
     'elementable' => [

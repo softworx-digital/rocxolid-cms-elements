@@ -25,7 +25,7 @@ interface PresentationModeProvider
     /**
      * Check if in presentation mode.
      *
-     * @return boolean
+     * @return bool
      */
     public function isPresenting(): bool;
 }

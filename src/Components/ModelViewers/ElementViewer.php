@@ -60,7 +60,7 @@ class ElementViewer extends CrudModelViewer implements Themeable
     /**
      * Check if assigned model in presentation mode.
      *
-     * @return boolean
+     * @return bool
      */
     public function isPresenting(): bool
     {
