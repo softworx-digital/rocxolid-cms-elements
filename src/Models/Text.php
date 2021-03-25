@@ -2,16 +2,12 @@
 
 namespace Softworx\RocXolid\CMS\Elements\Models;
 
-use App;
-// rocXolid fundamentals
-use Softworx\RocXolid\Contracts\Translatable;
 // rocXolid common traits
-use Softworx\RocXolid\Common\Models\Traits\HasImage;
-use Softworx\RocXolid\Common\Models\Traits\HasFile;
-// rocXolid cms models
-use Softworx\RocXolid\CMS\Models\AbstractPageElement;
-// components
-use Softworx\RocXolid\CMS\Components\ModelViewers\TextPageElementViewer;
+use Softworx\RocXolid\Common\Models\Traits as CommonTraits;
+// rocXolid cms elements models
+use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractComponentElement;
+// rocXolid cms elements model contracts
+use Softworx\RocXolid\CMS\Elements\Models\Contracts\DisplayRulesProvider;
 
 /**
  * Text page element - most basic element.
@@ -20,21 +16,23 @@ use Softworx\RocXolid\CMS\Components\ModelViewers\TextPageElementViewer;
  * @package Softworx\RocXolid\CMS\Elements
  * @version 1.0.0
  */
-class Text extends AbstractPageElement
+class Text extends AbstractComponentElement implements DisplayRulesProvider
 {
-    use HasImage;
-    use HasFile;
+    use Traits\HasDisplayRules;
+    // use CommonTraits\HasImage;
+    // use CommonTraits\HasFile;
 
-    protected $table = 'cms_page_element_text';
-
+    /**
+     * {@inheritDoc}
+     */
     protected $fillable = [
-        'web_id',
         'name',
         'bookmark',
         'content',
+        'meta_data',
     ];
 
-    // @todo: put this into config to be project specific (and this declaration taken as default)
+    // @todo put this into config to be project specific (and this declaration taken as default)
     protected $image_sizes = [
         'image' => [
             'icon' => [ 'width' => 70, 'height' => 70, 'method' => 'fit', 'constraints' => [ 'upsize', ], ],
@@ -45,10 +43,19 @@ class Text extends AbstractPageElement
         ],
     ];
 
-    public function getModelViewerComponentInside(Translatable $component)
+    /**
+     * {@inheritDoc}
+     */
+    public function getDocumentEditorElementSnippetPreview(): string
     {
-        $controller = $this->getCrudController();
+        return $this->getDocumentEditorElementSnippetPreviewAssetPath('text');
+    }
 
-        return TextPageElementViewer::build($controller, $controller)->setModel($this)->setController($controller);
+    /**
+     * {@inheritDoc}
+     */
+    public function getDefaultContent(?string $part = null): string
+    {
+        return \Faker\Factory::create('en_US')->realText();
     }
 }

@@ -1,0 +1,1 @@
+<span class="label label-info" data-dependency="{{ $dependency }}"@if (isset($remove) && $remove) data-dependency-on-empty="remove-parent"@endif contenteditable="false">[{{ $title }}]</span>

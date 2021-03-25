@@ -5,6 +5,12 @@ namespace Softworx\RocXolid\CMS\Elements;
 use Illuminate\Foundation\AliasLoader;
 // rocXolid service providers
 use Softworx\RocXolid\AbstractServiceProvider as RocXolidAbstractServiceProvider;
+// rocXolid rendering service contracts
+use Softworx\RocXolid\Rendering\Services\Contracts\RenderingService;
+// rocXolid cms rendering service contracts
+use Softworx\RocXolid\CMS\Rendering\Services\ThemeRenderingService;
+// rocXolid cms elements model viewers
+use Softworx\RocXolid\CMS\Elements\Components\ModelViewers;
 
 /**
  * rocXolid CMS Elements package primary service provider.
@@ -33,10 +39,10 @@ class ServiceProvider extends RocXolidAbstractServiceProvider
     }
 
     /**
-    * Bootstrap the application services.
-    *
-    * @return void
-    */
+     * Bootstrap the application services.
+     *
+     * @return void
+     */
     public function boot()
     {
         $this
@@ -60,7 +66,7 @@ class ServiceProvider extends RocXolidAbstractServiceProvider
         // php artisan vendor:publish --provider="Softworx\RocXolid\CMS\Elements\ServiceProvider" --tag="lang" (--force to overwrite)
         $this->publishes([
             //__DIR__ . '/../resources/lang' => resource_path('lang/vendor/softworx/rocXolid/cms-elements'),
-            __DIR__ . '/../resources/lang' => resource_path('lang/vendor/rocXolid:cms-elements'),
+            __DIR__ . '/../resources/lang' => resource_path('lang/vendor/rocXolid:cms-elements'), // used by laravel's FileLoaded::loadNamespaceOverrides()
         ], 'lang');
 
         // views files
@@ -68,6 +74,12 @@ class ServiceProvider extends RocXolidAbstractServiceProvider
         $this->publishes([
             __DIR__ . '/../resources/views' => resource_path('views/vendor/softworx/rocXolid/cms-elements'),
         ], 'views');
+
+        // assets files
+        // php artisan vendor:publish --provider="Softworx\RocXolid\CMS\Elements\ServiceProvider" --tag="assets" (--force to overwrite)
+        $this->publishes([
+            __DIR__ . '/../resources/assets' => public_path('vendor/softworx/rocXolid-cms-elements'),
+        ], 'assets');
 
         // migrations
         // php artisan vendor:publish --provider="Softworx\RocXolid\CMS\Elements\ServiceProvider" --tag="migrations" (--force to overwrite)
@@ -94,6 +106,19 @@ class ServiceProvider extends RocXolidAbstractServiceProvider
      */
     private function bindContracts(): RocXolidAbstractServiceProvider
     {
+        // @todo this doesn't work and setting this for each model viewer isn't the right way
+        // $this->app->when(\Softworx\RocXolid\CMS\Rendering\Contracts\Themeable::class)
+        $this->app->when([
+                ModelViewers\SectionElementViewer::class,
+                ModelViewers\GridRowElementViewer::class,
+                ModelViewers\GridColumnElementViewer::class,
+                ModelViewers\TextElementViewer::class,
+            ])
+            ->needs(RenderingService::class)
+            ->give(function ($app) {
+                return $app->make(ThemeRenderingService::class);
+            });
+
         return $this;
     }
 

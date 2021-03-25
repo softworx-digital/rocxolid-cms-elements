@@ -15,8 +15,9 @@
 	"license": "MIT",
     "require": {
         "php": "~7.2",
-        "laravel/framework": "5.8.*|^6.0",
-        "softworx/rocxolid-cms": "*"
+        "laravel/framework": "^6.0|^8.0",
+        "softworx/rocxolid-cms": "*",
+        "softworx/rocxolid-common": "*"
     },
     "autoload": {
         "psr-4": {

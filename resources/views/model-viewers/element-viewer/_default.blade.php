@@ -1,0 +1,1 @@
+<div class="alert alert-danger">[element-viewer.default] Please define element specific template in the themes/[theme]/element-viewer/[element-short-kebab-name]!</div>

@@ -5,7 +5,7 @@ namespace Softworx\RocXolid\CMS\Elements\Providers;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 // rocXolid services
-use Softworx\RocXolid\Services\CrudRouterService;
+use Softworx\RocXolid\CMS\Elements\Services\ElementRouterService;
 
 /**
  * rocXolid routes service provider.
@@ -33,19 +33,21 @@ class RouteServiceProvider extends IlluminateServiceProvider
     /**
      * Define the routes for the package.
      *
-     * @param  \Illuminate\Routing\Router $router Router to be used for routing.
+     * @param \Illuminate\Routing\Router $router Router to be used for routing.
      * @return \Illuminate\Support\ServiceProvider
      */
     private function load(Router $router): IlluminateServiceProvider
     {
         $router->group([
-            'module' => 'rocXolid-common',
+            'module' => 'rocXolid-cms-elements',
             'middleware' => [ 'web', 'rocXolid.auth' ],
             'namespace' => 'Softworx\RocXolid\CMS\Elements\Http\Controllers',
-            'prefix' => sprintf('%s/common', config('rocXolid.admin.general.routes.root', 'rocXolid')),
-            'as' => 'rocXolid.common.',
+            'prefix' => sprintf('%s/cms/elements', config('rocXolid.admin.general.routes.root', 'rocXolid')),
+            'as' => 'rocXolid.cms.elements.',
         ], function ($router) {
-            // CrudRouterService::create('web', \Web\Controller::class);
+            // ElementRouterService::create('section', \Section\Controller::class);
+            ElementRouterService::create('grid-row', \GridRow\Controller::class);
+            ElementRouterService::create('text', \Text\Controller::class);
         });
 
         return $this;
@@ -54,12 +56,14 @@ class RouteServiceProvider extends IlluminateServiceProvider
     /**
      * Define the route bindings for URL params.
      *
-     * @param  \Illuminate\Routing\Router $router Router to be used for routing.
+     * @param \Illuminate\Routing\Router $router Router to be used for routing.
      * @return \Illuminate\Support\ServiceProvider
      */
     private function mapRouteModels(Router $router): IlluminateServiceProvider
     {
-        // $router->model('web', \Softworx\RocXolid\CMS\Elements\Models\Web::class);
+        // $router->model('section', \Softworx\RocXolid\CMS\Elements\Models\Section::class);
+        $router->model('grid_row', \Softworx\RocXolid\CMS\Elements\Models\GridRow::class);
+        $router->model('text', \Softworx\RocXolid\CMS\Elements\Models\Text::class);
 
         return $this;
     }
