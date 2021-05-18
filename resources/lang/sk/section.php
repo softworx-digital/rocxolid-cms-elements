@@ -20,6 +20,7 @@ return [
             'inverted' => 'Sekcia - tmavé pozadie',
             'image' => 'Sekcia - obrázok',
             'estate-image' => 'Sekcia - obrázok nehnuteľnosť',
+            'article-image' => 'Sekcia - obrázok článok',
         ],
     ],
     'elementable' => [
