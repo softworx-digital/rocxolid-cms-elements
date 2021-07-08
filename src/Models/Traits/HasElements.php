@@ -125,8 +125,9 @@ trait HasElements
 
                 if ($pivot && $carry) {
                     throw new \RuntimeException(sprintf(
-                        'There are two pivots satisfying same condition [%s] pivot [%s], carry [%s]',
+                        'There are two pivots satisfying same condition [%s], type [%s], pivot [%s], carry [%s]',
                         print_r($type->getPrimaryKeyWhereCondition($this, $element), true),
+                        get_class($type),
                         $pivot->toJson(),
                         $carry->toJson()
                     ));

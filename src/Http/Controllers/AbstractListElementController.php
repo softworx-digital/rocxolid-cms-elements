@@ -45,7 +45,7 @@ abstract class AbstractListElementController extends AbstractElementController
         return static::$containee_class;
     }
 
-    public function reorder(CrudRequest $request, CrudableModel $model, string $relation)//: View
+    public function reorder(CrudRequest $request, CrudableModel $model, string $relation, ?string $position_column = null)//: View
     {
         if (($order = $request->input('_data', false)) && is_array($order)) {
             foreach ($order as $containee_order_data) {
