@@ -100,7 +100,7 @@ abstract class AbstractElementableElementPivot extends MorphPivot
     /**
      * {@inheritDoc}
      */
-    protected function setKeysForSaveQuery(Builder $query)
+    protected function setKeysForSaveQuery($query)
     {
         $query->where($this->getPrimaryKeyWhereCondition());
 
