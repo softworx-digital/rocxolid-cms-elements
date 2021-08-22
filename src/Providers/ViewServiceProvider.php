@@ -5,8 +5,8 @@ namespace Softworx\RocXolid\CMS\Elements\Providers;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
-// rocXolid rendering contracts
-use Softworx\RocXolid\Rendering\Contracts\Renderable;
+// rocXolid cms elements package provider
+use Softworx\RocXolid\CMS\Elements\ServiceProvider as PackageServiceProvider;
 
 /**
  * rocXolid views & composers service provider.
@@ -40,9 +40,9 @@ class ViewServiceProvider extends IlluminateServiceProvider
     private function load(): IlluminateServiceProvider
     {
         // customized views preference
-        $this->loadViewsFrom(resource_path('views/vendor/rocXolid/cms-elements'), 'rocXolid:cms-elements');
+        $this->loadViewsFrom(PackageServiceProvider::viewsPublishPath(), 'rocXolid:cms-elements');
         // pre-defined views fallback
-        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'rocXolid:cms-elements');
+        $this->loadViewsFrom(PackageServiceProvider::viewsSourcePath(dirname(dirname(__DIR__))), 'rocXolid:cms-elements');
 
         return $this;
     }

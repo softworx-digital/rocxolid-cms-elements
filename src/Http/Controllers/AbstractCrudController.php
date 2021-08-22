@@ -24,5 +24,5 @@ abstract class AbstractCrudController extends RocXolidAbstractCrudController
     /**
      * {@inheritDoc}
      */
-    protected $translation_package = 'rocXolid:cms-elements';
+    protected $translation_package = 'rocXolid-cms-elements';
 }
