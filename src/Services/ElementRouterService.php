@@ -2,6 +2,7 @@
 
 namespace Softworx\RocXolid\CMS\Elements\Services;
 
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Route;
 // rocXolid services
 use Softworx\RocXolid\Services\CrudRouterService;
@@ -26,5 +27,19 @@ class ElementRouterService extends CrudRouterService
         */
 
         return $this;
+    }
+
+    protected function getParam(): string
+    {
+        return sprintf('cms_element_%s', Str::snake($this->param));
+    }
+
+    protected function getOptions(): array
+    {
+        return parent::getOptions() + [
+            'parameters' => [
+                $this->name => $this->getParam(),
+            ],
+        ];
     }
 }

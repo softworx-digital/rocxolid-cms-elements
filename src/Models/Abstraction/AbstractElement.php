@@ -117,6 +117,14 @@ abstract class AbstractElement extends AbstractCrudModel implements Element
     /**
      * {@inheritDoc}
      */
+    public static function getAuthorizationParameter(): ?string
+    {
+        return sprintf('cms_element_%s', Str::snake(class_basename(static::class)));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getSettingsUrl(): ?string
     {
         if ($user = auth('rocXolid')->user()) {
@@ -223,6 +231,14 @@ abstract class AbstractElement extends AbstractCrudModel implements Element
     public function getElementTypeParam(): string
     {
         return $this->getModelName();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function morphTypeParam(): string
+    {
+        return sprintf('cms-element-%s', parent::morphTypeParam());
     }
 
     /**

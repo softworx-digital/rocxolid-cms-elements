@@ -45,9 +45,12 @@ class RouteServiceProvider extends IlluminateServiceProvider
             'prefix' => sprintf('%s/cms/elements', config('rocXolid.admin.general.routes.root', 'rocXolid')),
             'as' => 'rocXolid.cms.elements.',
         ], function ($router) {
-            // ElementRouterService::create('section', \Section\Controller::class);
+            ElementRouterService::create('section', \Section\Controller::class);
             ElementRouterService::create('grid-row', \GridRow\Controller::class);
             ElementRouterService::create('text', \Text\Controller::class);
+            ElementRouterService::create('image', \Image\Controller::class);
+            ElementRouterService::create('gallery', \Gallery\Controller::class);
+            ElementRouterService::create('youtube-video', \YoutubeVideo\Controller::class);
         });
 
         return $this;
@@ -61,9 +64,12 @@ class RouteServiceProvider extends IlluminateServiceProvider
      */
     private function mapRouteModels(Router $router): IlluminateServiceProvider
     {
-        // $router->model('section', \Softworx\RocXolid\CMS\Elements\Models\Section::class);
-        $router->model('grid_row', \Softworx\RocXolid\CMS\Elements\Models\GridRow::class);
-        $router->model('text', \Softworx\RocXolid\CMS\Elements\Models\Text::class);
+        $router->model('cms_element_section', \Softworx\RocXolid\CMS\Elements\Models\Section::class);
+        $router->model('cms_element_grid_row', \Softworx\RocXolid\CMS\Elements\Models\GridRow::class);
+        $router->model('cms_element_text', \Softworx\RocXolid\CMS\Elements\Models\Text::class);
+        $router->model('cms_element_image', \Softworx\RocXolid\CMS\Elements\Models\Image::class);
+        $router->model('cms_element_gallery', \Softworx\RocXolid\CMS\Elements\Models\Gallery::class);
+        $router->model('cms_element_youtube_video', \Softworx\RocXolid\CMS\Elements\Models\YoutubeVideo::class);
 
         return $this;
     }

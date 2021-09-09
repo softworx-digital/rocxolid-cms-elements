@@ -1,137 +1,49 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-<svg
-    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-    xmlns="http://www.w3.org/2000/svg"
-    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-    xmlns:cc="http://web.resource.org/cc/"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-    xmlns:dc="http://purl.org/dc/elements/1.1/"
-    xmlns:svg="http://www.w3.org/2000/svg"
-    xmlns:ns1="http://sozi.baierouge.fr"
-    id="svg1"
-    sodipodi:docname="rectangle.svg"
-    viewBox="0 0 60 60"
-    sodipodi:version="0.32"
-    version="1.0"
-    y="0"
-    x="0"
-    inkscape:version="0.38.1"
-    sodipodi:docbase="/home/danny/flat/scalable/actions"
-  >
-  <sodipodi:namedview
-      id="base"
-      bordercolor="#666666"
-      inkscape:pageshadow="2"
-      inkscape:window-width="1016"
-      pagecolor="#ffffff"
-      inkscape:zoom="6.9465337"
-      inkscape:window-x="0"
-      borderopacity="1.0"
-      inkscape:cx="33.984503"
-      inkscape:cy="14.678974"
-      inkscape:window-y="0"
-      inkscape:window-height="685"
-      inkscape:pageopacity="0.0"
-  />
-  <rect
-      id="rect838"
-      style="stroke-linejoin:round;fill-rule:evenodd;stroke:#333333;stroke-linecap:round;stroke-dasharray:2.8976262,2.8976262;stroke-width:2.8976;fill:#b3b3b3"
-      rx="2"
-      transform="matrix(1.0785 0 0 1.0785 -2.9473 -3.5182)"
-      height="34.01"
-      width="47.326"
-      sodipodi:stroke-cmyk="(0.0000000 0.0000000 0.0000000 0.80000001)"
-      y="14.294"
-      x="7.0179"
-  />
-  <metadata
-    >
-    <rdf:RDF
-      >
-      <cc:Work
-        >
-        <dc:format
-          >image/svg+xml</dc:format
-        >
-        <dc:type
-            rdf:resource="http://purl.org/dc/dcmitype/StillImage"
-        />
-        <cc:license
-            rdf:resource="http://creativecommons.org/licenses/publicdomain/"
-        />
-        <dc:publisher
-          >
-          <cc:Agent
-              rdf:about="http://openclipart.org/"
-            >
-            <dc:title
-              >Openclipart</dc:title
-            >
-          </cc:Agent
-          >
-        </dc:publisher
-        >
-        <dc:title
-          >ft14 rectangle</dc:title
-        >
-        <dc:date
-          >2011-01-31T02:01:03</dc:date
-        >
-        <dc:description
-          >Originally uploaded by Danny Allen for OCAL 0.18 this icon is part of the flat theme</dc:description
-        >
-        <dc:source
-          >https://openclipart.org/detail/111481/ft14-rectangle-by-anonymous</dc:source
-        >
-        <dc:creator
-          >
-          <cc:Agent
-            >
-            <dc:title
-              >Anonymous</dc:title
-            >
-          </cc:Agent
-          >
-        </dc:creator
-        >
-        <dc:subject
-          >
-          <rdf:Bag
-            >
-            <rdf:li
-              >flat</rdf:li
-            >
-            <rdf:li
-              >icon</rdf:li
-            >
-            <rdf:li
-              >theme</rdf:li
-            >
-          </rdf:Bag
-          >
-        </dc:subject
-        >
-      </cc:Work
-      >
-      <cc:License
-          rdf:about="http://creativecommons.org/licenses/publicdomain/"
-        >
-        <cc:permits
-            rdf:resource="http://creativecommons.org/ns#Reproduction"
-        />
-        <cc:permits
-            rdf:resource="http://creativecommons.org/ns#Distribution"
-        />
-        <cc:permits
-            rdf:resource="http://creativecommons.org/ns#DerivativeWorks"
-        />
-      </cc:License
-      >
-    </rdf:RDF
-    >
-  </metadata
-  >
-</svg
->
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+<rect x="34.215" y="126.539" style="fill:#FFFFFF;" width="351.463" height="351.463"/>
+<path style="fill:#B4BBCC;" d="M47.128,101.767h325.636c25.986,0,47.128,21.141,47.128,47.128v305.879
+	c0,25.986-21.141,47.128-47.128,47.128H47.128C21.141,501.903,0,480.76,0,454.774V148.895C0,122.909,21.141,101.767,47.128,101.767z
+	 M374.056,148.895c0-0.713-0.58-1.293-1.293-1.293H47.128c-0.713,0-1.293,0.58-1.293,1.293v305.879c0,0.713,0.58,1.293,1.293,1.293
+	h325.636c0.713,0,1.293-0.58,1.293-1.293L374.056,148.895L374.056,148.895z"/>
+<path style="fill:#7DD2F0;" d="M287.002,227.814v53.606c0,8.073-3.781,15.68-10.218,20.554l-71.555,54.19l24.98,35.256H111.279
+	l39.433-112.202l24.691,34.85l60.034-45.464v-40.79c0-14.239,11.544-25.782,25.782-25.782
+	C275.458,202.032,287.002,213.575,287.002,227.814z"/>
+<path style="opacity:0.1;enable-background:new    ;" d="M261.219,202.032c-14.239,0-25.782,11.544-25.782,25.782v40.79
+	l-6.662,5.045h58.226v-45.835C287.002,213.575,275.459,202.032,261.219,202.032z"/>
+<path style="opacity:0.1;enable-background:new    ;" d="M372.764,101.767H91.275v45.835h281.489c0.713,0,1.293,0.58,1.293,1.293
+	v124.754h45.835V148.895C419.891,122.909,398.75,101.767,372.764,101.767z"/>
+<path style="fill:#C7CFE2;" d="M512,40.349v168.674c0,16.707-13.543,30.25-30.25,30.25H155.901c-16.707,0-30.25-13.543-30.25-30.25
+	V40.349c0-16.707,13.543-30.25,30.25-30.25h325.848C498.456,10.097,512,23.642,512,40.349z"/>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg>

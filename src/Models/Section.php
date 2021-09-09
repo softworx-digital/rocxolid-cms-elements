@@ -16,6 +16,8 @@ use Softworx\RocXolid\CMS\Elements\Models\Abstraction\AbstractContainerElement;
  */
 class Section extends AbstractContainerElement
 {
+    use Traits\HasContent;
+
     /**
      * {@inheritDoc}
      */

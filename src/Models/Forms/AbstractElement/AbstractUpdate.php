@@ -14,6 +14,9 @@ use Softworx\RocXolid\CMS\Elements\MetaData\Contracts\MetaDataOperator;
  */
 abstract class AbstractUpdate extends RocXolidAbstractCrudForm
 {
+    /**
+     * @inheritDoc
+     */
     protected $options = [
         'method' => 'POST',
         'route-action' => 'update',
@@ -21,8 +24,14 @@ abstract class AbstractUpdate extends RocXolidAbstractCrudForm
         'show-back-button' => false,
     ];
 
+    /**
+     * @inheritDoc
+     */
     protected $fields = [];
 
+    /**
+     * @inheritDoc
+     */
     protected $buttons = [
         'submit' => [
             'type' => FieldType\ButtonSubmit::class,
@@ -37,6 +46,9 @@ abstract class AbstractUpdate extends RocXolidAbstractCrudForm
         ],
     ];
 
+    /**
+     * @inheritDoc
+     */
     protected function adjustFieldsDefinition($fields)
     {
         $fields = []; // to clear fields added by default (model's fillable)

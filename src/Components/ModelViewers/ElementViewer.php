@@ -35,6 +35,10 @@ class ElementViewer extends CrudModelViewer implements Themeable
      */
     public function getElementDataAttributes(): string
     {
+        if ($this->isPresenting()) {
+            return '';
+        }
+
         return collect([
             'data-type' => $this->getModel()->getDocumentEditorElementType(),
             'data-element-type' => $this->getModel()->getElementTypeParam(),
