@@ -2,7 +2,8 @@
 
 namespace Softworx\RocXolid\CMS\Elements\Components\ModelViewers;
 
-use Softworx\RocXolid\CMS\Elements\Components\ModelViewers\ElementViewer;
+// rocXolid cms elements components
+use Softworx\RocXolid\CMS\Elements\Components\ModelViewers\Element as ElementModelViewer;
 
 /**
  * Model viewer for Image CMS element.
@@ -11,6 +12,6 @@ use Softworx\RocXolid\CMS\Elements\Components\ModelViewers\ElementViewer;
  * @package Softworx\RocXolid\CMS\Elements
  * @version 1.0.0
  */
-class ImageViewer extends ElementViewer
+class Image extends ElementModelViewer
 {
 }

@@ -15,7 +15,7 @@ use Softworx\RocXolid\CMS\Rendering\Traits\CanBeThemed;
  * @package Softworx\RocXolid\CMS\Elements
  * @version 1.0.0
  */
-class ElementViewer extends CrudModelViewer implements Themeable
+class Element extends CrudModelViewer implements Themeable
 {
     use CanBeThemed;
 

@@ -9,13 +9,9 @@ use Softworx\RocXolid\Common\Models\Localization;
 use Softworx\RocXolid\CMS\Models\Page;
 use Softworx\RocXolid\CMS\Models\Article;
 use Softworx\RocXolid\CMS\Models\ArticleCategory;
-// rocXolid cms element dependencies
-use Softworx\RocXolid\CMS\ElementableDependencies\Page\Article as ArticleDependency;
-use Softworx\RocXolid\CMS\ElementableDependencies\Page\ArticleCategory as ArticleCategoryDependency;
-use Softworx\RocXolid\CMS\ElementableDependencies\Page\ArticleTag as ArticleTagDependency;
 
 /**
- * @todo revise
+ * @todo revise & generalize
  */
 trait HasBlogRouting
 {
@@ -48,22 +44,46 @@ trait HasBlogRouting
 
     private function articleDetailPage(Localization $localization): ?Page
     {
+        if (blank(config('rocXolid.cms.dependency.semantics.article'))) {
+            throw new \RuntimeException(sprintf(
+                'Unspecified dependency for "%s" identification, configure in [rocXolid.cms.dependency.semantics.%s]',
+                'article',
+                'article'
+            ));
+        }
+
         return Page::where('is_enabled', true)
             ->where('localization_id', $localization->getKey())
-            ->whereJsonContains('dependencies', ArticleDependency::class)->first();
+            ->whereJsonContains('dependencies', config('rocXolid.cms.dependency.semantics.article'))->first();
     }
 
     private function articleCategoryPage(Localization $localization): ?Page
     {
+        if (blank(config('rocXolid.cms.dependency.semantics.article-category'))) {
+            throw new \RuntimeException(sprintf(
+                'Unspecified dependency for "%s" identification, configure in [rocXolid.cms.dependency.semantics.%s]',
+                'article-category',
+                'article-category'
+            ));
+        }
+
         return Page::where('is_enabled', true)
             ->where('localization_id', $localization->getKey())
-            ->whereJsonContains('dependencies', ArticleCategoryDependency::class)->first();
+            ->whereJsonContains('dependencies', config('rocXolid.cms.dependency.semantics.article-category'))->first();
     }
 
     private function articleTagPage(Localization $localization): ?Page
     {
+        if (blank(config('rocXolid.cms.dependency.semantics.article'))) {
+            throw new \RuntimeException(sprintf(
+                'Unspecified dependency for "%s" identification, configure in [rocXolid.cms.dependency.semantics.%s]',
+                'article-tag',
+                'article-tag'
+            ));
+        }
+
         return Page::where('is_enabled', true)
             ->where('localization_id', $localization->getKey())
-            ->whereJsonContains('dependencies', ArticleTagDependency::class)->first();
+            ->whereJsonContains('dependencies', config('rocXolid.cms.dependency.semantics.article-tag'))->first();
     }
 }

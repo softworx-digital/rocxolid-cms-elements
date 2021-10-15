@@ -8,13 +8,13 @@ use Softworx\RocXolid\Http\Requests\CrudRequest;
 use Softworx\RocXolid\Forms\AbstractCrudForm;
 // rocXolid model contracts
 use Softworx\RocXolid\Models\Contracts\Crudable;
-// rocXolid cms elements model viewers
-use Softworx\RocXolid\CMS\Elements\Components\ModelViewers\ElementViewer;
 // rocXolid cms elements controllers
 use Softworx\RocXolid\CMS\Elements\Http\Controllers\AbstractCrudController;
+// rocXolid cms elements components
+use Softworx\RocXolid\CMS\Elements\Components\ModelViewers\Element as ElementModelViewer;
 
 /**
- * YoutubeVideo element controller.
+ * YoutubeVideo element model controller.
  *
  * @author softworx <hello@softworx.digital>
  * @package Softworx\RocXolid\CMS\Elements
@@ -25,7 +25,7 @@ class Controller extends AbstractCrudController
     /**
      * {@inheritDoc}
      */
-    protected static $model_viewer_type = ElementViewer::class;
+    protected static $model_viewer_type = ElementModelViewer::class;
 
     /**
      * @inheritDoc

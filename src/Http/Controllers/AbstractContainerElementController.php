@@ -5,7 +5,7 @@ namespace Softworx\RocXolid\CMS\Elements\Http\Controllers;
 // rocXolid cms elements controllers
 use Softworx\RocXolid\CMS\Elements\Http\Controllers\AbstractElementController;
 // rocXolid cms elements model viewers
-use Softworx\RocXolid\CMS\Elements\Components\ModelViewers\ElementContainerViewer;
+use Softworx\RocXolid\CMS\Elements\Components\ModelViewers\ElementContainer as ElementContainerModelViewer;
 
 /**
  * CMS Elements controller for elements serving as containers.
@@ -17,5 +17,5 @@ use Softworx\RocXolid\CMS\Elements\Components\ModelViewers\ElementContainerViewe
  */
 abstract class AbstractContainerElementController extends AbstractElementController
 {
-    protected static $model_viewer_type = ElementContainerViewer::class;
+    protected static $model_viewer_type = ElementContainerModelViewer::class;
 }

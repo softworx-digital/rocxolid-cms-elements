@@ -6,7 +6,7 @@ namespace Softworx\RocXolid\CMS\Elements\Http\Controllers\Section;
 use Softworx\RocXolid\CMS\Elements\Http\Controllers\AbstractContainerElementController;
 
 /**
- * Grid row element controller.
+ *Section element model controller.
  *
  * @author softworx <hello@softworx.digital>
  * @package Softworx\RocXolid\CMS\Elements

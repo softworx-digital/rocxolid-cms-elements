@@ -6,7 +6,7 @@ namespace Softworx\RocXolid\CMS\Elements\Http\Controllers\Text;
 use Softworx\RocXolid\CMS\Elements\Http\Controllers\AbstractElementController;
 
 /**
- * Text element controller.
+ * Text element model controller.
  *
  * @author softworx <hello@softworx.digital>
  * @package Softworx\RocXolid\CMS\Elements

@@ -5,10 +5,10 @@ namespace Softworx\RocXolid\CMS\Elements\Http\Controllers\Image;
 // rocXolid cms elements controllers
 use Softworx\RocXolid\CMS\Elements\Http\Controllers\AbstractElementController;
 // rocXolid cms elements model viewers
-use Softworx\RocXolid\CMS\Elements\Components\ModelViewers\ImageViewer;
+use Softworx\RocXolid\CMS\Elements\Components\ModelViewers\Image as ImageModelViewer;
 
 /**
- * Image element controller.
+ * Image element model controller.
  *
  * @author softworx <hello@softworx.digital>
  * @package Softworx\RocXolid\CMS\Elements
@@ -16,5 +16,5 @@ use Softworx\RocXolid\CMS\Elements\Components\ModelViewers\ImageViewer;
  */
 class Controller extends AbstractElementController
 {
-    protected static $model_viewer_type = ImageViewer::class;
+    protected static $model_viewer_type = ImageModelViewer::class;
 }

@@ -6,7 +6,7 @@ namespace Softworx\RocXolid\CMS\Elements\Http\Controllers\Footer;
 use Softworx\RocXolid\CMS\Elements\Http\Controllers\AbstractContainerElementController;
 
 /**
- * Grid row element controller.
+ * Footer element model controller.
  *
  * @author softworx <hello@softworx.digital>
  * @package Softworx\RocXolid\CMS\Elements

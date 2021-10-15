@@ -37,7 +37,7 @@ abstract class AbstractCreate extends RocXolidAbstractCrudForm
         ],
     ];
 
-    protected function adjustFieldsDefinition($fields)
+    protected function adjustFieldsDefinition(array $fields): array
     {
         $fields = []; // to clear fields added by default (model's fillable)
 
